@@ -24,7 +24,6 @@ public class Princesa {
 		this.ancho=40;
 		this.alto=50;
 		this.color=Color.PINK;
-		
 		this.velocidadY=0;
 		this.gravedad=0.5;
 		this.enelaire=false;
@@ -46,39 +45,53 @@ public class Princesa {
 		}
 	}
 	
-//	funciones para saltar	
-	public void saltar() {
+	// Funciones para saltar
+    public void saltar() {
         if (!enelaire) {
-            this.velocidadY=-10;
-            enelaire=true;
-        }
-    }
-    public void actualizar(Entorno e) {
-        if (enelaire) {
-            this.y+=this.velocidadY;
-            this.velocidadY+=gravedad;
-            
-            if (this.y+this.alto/2>e.alto()) {
-                this.y=e.alto()-this.alto/2;
-                this.velocidadY=0;
-                enelaire=false;
-            }
+            this.velocidadY = -12;
+            enelaire = true;
         }
     }
     
-    //princesa colisiona con suelo ?????
-    public boolean colisionconpiso(Suelo suelo) {
-    	return this.x + this.ancho/2 > suelo.getX() - suelo.getAncho()/2 &&
-				 this.x - this.ancho/2 < suelo.getX() + suelo.getAncho()/2 &&
-				 this.y + this.alto/2 > suelo.getY() - suelo.getAlto()/2 &&
-				 this.y - this.alto/2 < suelo.getY() + suelo.getAlto()/2; 
+//    public boolean colisionConElementos(Piso[] pisos) {
+//        for (Piso piso : pisos) {
+//            if (colisionConLadrillo(piso.getLadrillos()) {
+//                return true; // Hay colisión con algún rectángulo del piso
+//            }
+//        }
+//        return false; // No hay colisión con ningún rectángulo de ningún piso
+//    }
+//
+//    public boolean colisionConRectangulo(Rectang rectangulo) {
+//        return this.x + this.ancho/2 > rectangulo.getX() - rectangulo.getAncho()/2 &&
+//               this.x - this.ancho/2 < rectangulo.getX() + rectangulo.getAncho()/2 &&
+//               this.y + this.alto/2 + 5 > rectangulo.getY() - rectangulo.getAlto()/2 &&
+//               this.y - this.alto/2 < rectangulo.getY() + rectangulo.getAlto()/2;
+//    }
+//
+//    public void actualizar(Entorno e, Piso[] pisos) {
+//        if (enelaire) {
+//            this.y += this.velocidadY;
+//            this.velocidadY += gravedad;
+//            
+//            // Verificar colisiones con cada rectángulo de cada piso
+//            for (Piso piso : pisos) {
+//                if (colisionConRectangulo(piso.getRectangIzquierdo()) || colisionConRectangulo(piso.getRectangDerecho())) {
+//                    // Manejar la colisión, por ejemplo, detener la princesa
+//                    this.y = Math.min(this.y, piso.getRectangIzquierdo().getY() - piso.getRectangIzquierdo().getAlto()/2 - this.alto/2);
+//                    this.velocidadY = 0;
+//                    enelaire = false;
+//                    break; // Salir del bucle si se detecta una colisión
+//                }
+//            }
+//        }
+//    }
+//    
+    public boolean isEnelaire() {
+        return enelaire;
+    }
 
-    }public boolean colisionConCaja(Cajas caja) {
-        return this.x + this.ancho/2 > caja.getX() - caja.getAncho()/2 &&
-                this.x - this.ancho/2 < caja.getX() + caja.getAncho()/2 &&
-                this.y + this.alto/2 > caja.getY() - caja.getAlto()/2 &&
-                this.y - this.alto/2 < caja.getY() + caja.getAlto()/2; 
-     }
- 
-    
+    public void setEnelaire(boolean enelaire) {
+        this.enelaire = enelaire;
+    }
 }

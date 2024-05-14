@@ -41,16 +41,22 @@ public class Juego extends InterfaceJuego {
             piso.dibujar(entorno); // Dibujar cada piso en cada iteración del juego
         }
 		princesa.dibujar(entorno);
-		if(entorno.estaPresionada('d'))
-			princesa.moverderecha(entorno);
-		
-		if(entorno.estaPresionada('a'))
-			princesa.moverizquierda();
-		
-		if (entorno.estaPresionada('w')) 
-            princesa.saltar();
-		princesa.actualizar(entorno);
-		
+		// Verificar colisión y actualizar princesa
+//	    if (princesa.colisionConElementos(pisos)) {
+//	        princesa.setEnelaire(false); // Detener el salto si hay colisión
+//	    }
+	    
+	    if(entorno.estaPresionada('d'))
+	        princesa.moverderecha(entorno);
+	    
+	    if(entorno.estaPresionada('a'))
+	        princesa.moverizquierda();
+	    
+	    if (entorno.estaPresionada('w')) 
+	        princesa.saltar();
+	    
+//	    	    princesa.actualizar(entorno, pisos); // Actualizar la princesa en cada tick
+	    
 	}
 	
 	@SuppressWarnings("unused")

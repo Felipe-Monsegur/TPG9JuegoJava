@@ -6,44 +6,20 @@ import entorno.Entorno;
 import entorno.Herramientas;
 
 public class Suelo {
-	private double x;
-	private double y;
-	private double ancho;
-	private double alto;
-	private Color color;
-	private Image imag;
-    private double angulo;
+	private Ladrillo[] suelo;
     
     
 	public Suelo(double x, double y,Entorno e) {
-		this.x = x;
-		this.y = y;
-		this.ancho = e.ancho();
-		this.alto = 40;
-		this.color = Color.ORANGE;
-		this.imag = Herramientas.cargarImagen("ladrillo.jpeg");
-	}
-	public double getX() {
-		return x;
-	}
-
-	public double getY() {
-		return y;
-	}
-
-	public double getAncho() {
-		return ancho;
-	}
-
-	public double getAlto() {
-		return alto;
-	}
-	public void dibujar(Entorno e) {
-		e.dibujarRectangulo(x, y, ancho, alto, 0, color);
-		for (int i = 0; i <10; i++) {
-            e.dibujarImagen(imag, (x + i * 47) , y+4, 0, 0.12); // Dibujar la imagen repetida para la derecha
-            e.dibujarImagen(imag, (x - i * 47) , y+4, 0, 0.12); // Dibujar la imagen repetida para la izquierda
-        }
+		this.suelo = new Ladrillo[e.ancho()/50];
+	      for (int i = 0; i < e.ancho()/50; i++) {
+	          this.suelo[i] = new Ladrillo((i * (50)+25),y, y,y, e); // Crear cada ladrillo en su posición correspondiente
+	      }
 	}
 	
+	
+	public void dibujar(Entorno entorno) {
+	      for (Ladrillo ladrillo : suelo) {
+	          ladrillo.dibujar(entorno); // Dibujar cada ladrillo del piso
+	      }
+	}
 }

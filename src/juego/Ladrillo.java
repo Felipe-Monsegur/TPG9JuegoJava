@@ -2,10 +2,11 @@ package juego;
 
 import java.awt.Color;
 import java.awt.Image;
+
 import entorno.Entorno;
 import entorno.Herramientas;
 
-public class Rectang {
+public class Ladrillo {
     private double x;
     private double y;
     private double ancho;
@@ -13,17 +14,16 @@ public class Rectang {
     private Color color;
     private Image imag;
     private double angulo;
-   
 
-    public Rectang(double x, double y, double ancho, double alto, Color color,Entorno e) {
+    public Ladrillo(double x, double y, double ancho, double alto,Entorno entorno) {
         this.x = x;
         this.y = y;
-        this.ancho = ancho;
+        this.ancho = 50;
         this.alto = 50;
         this.color = Color.ORANGE;
-        this.imag = Herramientas.cargarImagen("ladrillo.jpeg");
+        this.imag = Herramientas.cargarImagen("ladrillo.jpeg");   
     }
-    
+
     public double getX() {
 		return x;
 	}
@@ -36,14 +36,11 @@ public class Rectang {
 	public double getAlto() {
 		return alto;
 	}
-  
+
+
+
 	public void dibujar(Entorno e) {
-		e.dibujarRectangulo(x, y, ancho, alto, 0, color);
-        e.dibujarImagen(imag, x, y, 0, 0.12);
-		for (int i = 0; i<8.5; i++ ) {
-            e.dibujarImagen(imag, (x + i * 47) , y, 0, 0.12); // Dibujar la imagen repetida para la derecha
-            e.dibujarImagen(imag, (x - i * 47) , y, 0, 0.12); // Dibujar la imagen repetida para la izquierda
-        }
-		
+        e.dibujarRectangulo(this.x, this.y, this.ancho, this.alto, 0, this.color);
+        e.dibujarImagen(imag, x, y, 0, 1);
     }
 }
