@@ -23,7 +23,7 @@ public class Juego extends InterfaceJuego {
         for (int i = 0; i < pisos.length; i++) {
             pisos[i] = new Piso(entorno.ancho() / 2, entorno.alto() - 160 - (i * 140), entorno.ancho(), 40, entorno);
         }
-        this.princesa = new Princesa(entorno.ancho()/2, entorno.alto()-65); 
+        this.princesa = new Princesa(entorno.ancho()/2, entorno.alto()/2); 
 	     
 		// Inicia el juego!
 		this.entorno.iniciar();		
@@ -50,15 +50,17 @@ public class Juego extends InterfaceJuego {
 //	    }
 	    
 	    if(entorno.estaPresionada('d'))
-	        princesa.moverderecha(entorno);
+	        princesa.moverDerecha(entorno);
 	    
 	    if(entorno.estaPresionada('a'))
-	        princesa.moverizquierda();
+	        princesa.moverIzquierda();
 	    
-	    if (entorno.estaPresionada('w')) 
-	        princesa.saltar();
+	    if (entorno.estaPresionada('w')) {
+            princesa.saltar();
+        }
+        princesa.actualizar(entorno, pisos, suelo);
+        princesa.dibujar(entorno);
 	    
-//	    	    princesa.actualizar(entorno, pisos); // Actualizar la princesa en cada tick
 	    
 	}
 	

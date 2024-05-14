@@ -7,8 +7,12 @@ import entorno.Herramientas;
 
 public class Suelo {
 	private Ladrillo[] suelo;
-    
-    
+	
+	public Ladrillo[] getSuelo() {
+		return suelo;
+	}
+
+
 	public Suelo(double x, double y,Entorno e) {
 		this.suelo = new Ladrillo[e.ancho()/50];
 	      for (int i = 0; i < e.ancho()/50; i++) {

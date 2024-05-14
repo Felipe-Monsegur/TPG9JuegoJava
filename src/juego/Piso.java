@@ -41,7 +41,11 @@ public class Piso {
 //	CON BLOQUES EN VEZ DE RECTANGULOS
   private Ladrillo[] ladrillos;
   private Metal metales;
- 
+  private double x;
+  private double y;
+  private double ancho;
+  private double alto;
+  
 
   public Piso(double x, double y, double ancho, double alto, Entorno e) {
       double anchoMetal = 150;//las cajas tiene ancho 150 pero lo vuelvo a aclarar aca para que se entienda los calulos
@@ -55,13 +59,23 @@ public class Piso {
       }
   }
 
-  public Ladrillo[] getLadrillos() {
-	return ladrillos;
-}
-public Metal getMetales() {
-	return metales;
-}
+	public Ladrillo[] getLadrillos() {
+		return ladrillos;
+	}
+	public Metal getMetales() {
+		return metales;
+	}
+	 public double getAlto() {
+	        return alto;
+	    }
 
+	    public double getY() {
+	        return y;
+	    }
+	
+	
+	
+	
 public void dibujar(Entorno entorno) {
       for (Ladrillo ladrillo : ladrillos) {
           ladrillo.dibujar(entorno); // Dibujar cada ladrillo del piso
