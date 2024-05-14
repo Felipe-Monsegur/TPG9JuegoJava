@@ -9,6 +9,7 @@ public class Juego extends InterfaceJuego {
 	private Entorno entorno;
 	private Suelo suelo;
 	private Piso[] pisos;
+	private Princesa princesa;
 	
 	public Juego() {
 		// Inicializa el objeto entorno
@@ -20,6 +21,7 @@ public class Juego extends InterfaceJuego {
         for (int i = 0; i < pisos.length; i++) {
             pisos[i] = new Piso(entorno.ancho() / 2, entorno.alto() - 160 - (i * 140), entorno.ancho(), 40, entorno);
         }
+        this.princesa = new Princesa(entorno.ancho()/2, entorno.alto()-65); 
 	     
 		// Inicia el juego!
 		this.entorno.iniciar();		
@@ -38,6 +40,16 @@ public class Juego extends InterfaceJuego {
 		for (Piso piso : pisos) {
             piso.dibujar(entorno); // Dibujar cada piso en cada iteración del juego
         }
+		princesa.dibujar(entorno);
+		if(entorno.estaPresionada('d'))
+			princesa.moverderecha(entorno);
+		
+		if(entorno.estaPresionada('a'))
+			princesa.moverizquierda();
+		
+		if (entorno.estaPresionada('w')) 
+            princesa.saltar();
+		princesa.actualizar(entorno);
 		
 	}
 	

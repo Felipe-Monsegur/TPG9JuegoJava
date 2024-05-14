@@ -23,8 +23,20 @@ public class Cajas {
         this.color = Color.LIGHT_GRAY;
         this.imag = Herramientas.cargarImagen("barril.jpeg");
     }
-    
-    public void dibujar(Entorno e) {
+            
+    public double getX() {
+		return x;
+	}
+	public double getY() {
+		return y;
+	}
+	public double getAncho() {
+		return ancho;
+	}
+	public double getAlto() {
+		return alto;
+	}
+	public void dibujar(Entorno e) {
     	e.dibujarRectangulo(x, y, ancho, alto, 0, color);
 //        e.dibujarImagen(imag,x, y, 0, 0.17);
         for (int i = 0; i<2; i++ ) {
