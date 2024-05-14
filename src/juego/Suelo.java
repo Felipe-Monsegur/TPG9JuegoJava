@@ -16,7 +16,7 @@ public class Suelo {
 	public Suelo(double x, double y,Entorno e) {
 		this.suelo = new Ladrillo[e.ancho()/50];
 	      for (int i = 0; i < e.ancho()/50; i++) {
-	          this.suelo[i] = new Ladrillo((i * (50)+25),y, y,y, e); // Crear cada ladrillo en su posición correspondiente
+	          this.suelo[i] = new Ladrillo((i * (50)+25),y, y,y, e); // Crear cada ladrillo
 	      }
 	}
 	

@@ -49,6 +49,7 @@ public class Juego extends InterfaceJuego {
 //	        princesa.setEnelaire(false); // Detener el salto si hay colisión
 //	    }
 	    
+		
 	    if(entorno.estaPresionada('d'))
 	        princesa.moverDerecha(entorno);
 	    

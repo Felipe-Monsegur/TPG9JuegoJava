@@ -38,6 +38,7 @@ public class Piso {
 	
 	
 	
+	
 //	CON BLOQUES EN VEZ DE RECTANGULOS
   private Ladrillo[] ladrillos;
   private Metal metales;
@@ -48,14 +49,14 @@ public class Piso {
   
 
   public Piso(double x, double y, double ancho, double alto, Entorno e) {
-      double anchoMetal = 150;//las cajas tiene ancho 150 pero lo vuelvo a aclarar aca para que se entienda los calulos
+      double anchoMetal = 150;//El metal tiene ancho 150 pero lo vuelvo a aclarar aca para que se entienda los calulos
       Random rand = new Random();
-      int randomX = rand.nextInt(700-(int)(anchoMetal/2)) + (int)(anchoMetal/2); // Posición x aleatoria dentro del ancho del piso
+      int randomX = rand.nextInt(700-(int)(anchoMetal/2)) + (int)(anchoMetal/2); // Posición x aleatoria dentro del ancho del piso para el metal
       int r = randomX;
       this.metales = new Metal(r, y, anchoMetal, alto, e);
       this.ladrillos = new Ladrillo[e.ancho()/50];
       for (int i = 0; i < e.ancho()/50; i++) {
-          this.ladrillos[i] = new Ladrillo((i * (50)+25), y, ancho,alto,e); // Crear cada ladrillo en su posición correspondiente
+          this.ladrillos[i] = new Ladrillo((i * (50)+25), y, ancho,alto,e); // Crear cada ladrillo
       }
   }
 

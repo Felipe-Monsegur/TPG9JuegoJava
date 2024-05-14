@@ -40,6 +40,7 @@ public class Ladrillo {
 	}
 
 	
+	//valores para poder romper el ladrillo y que no se dibuje si esta roto
 	public boolean isRoto() {
         return roto;
     }

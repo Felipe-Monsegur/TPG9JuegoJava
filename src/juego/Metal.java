@@ -36,6 +36,7 @@ public class Metal {
 	public double getAlto() {
 		return alto;
 	}
+	
 	public void dibujar(Entorno e) {
     	e.dibujarRectangulo(x, y, ancho, alto, 0, color);
 //        e.dibujarImagen(imag,x, y, 0, 0.17);
