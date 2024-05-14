@@ -42,7 +42,7 @@ public class Princesa {
 	}
 	
 	public void moverIzquierda() {
-		if(this.x-this.ancho/2>=0) {
+		if(this.x-this.ancho/2-3>=0) {
 			this.x-=5;
 		}
 	}
@@ -50,7 +50,7 @@ public class Princesa {
 //	funciones para saltar	
 	public void saltar() {
         if (!enelaire) {
-            this.velocidadY=-10;
+            this.velocidadY=-12;
             enelaire=true;
         }
     }
