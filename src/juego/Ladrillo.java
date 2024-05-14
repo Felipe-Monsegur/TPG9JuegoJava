@@ -21,7 +21,7 @@ public class Ladrillo {
         this.ancho = 50;
         this.alto = 50;
         this.color = Color.ORANGE;
-        this.imag = Herramientas.cargarImagen("ladrillo.jpeg");   
+        this.imag = Herramientas.cargarImagen("ladrillo.png");   
     }
 
     public double getX() {
