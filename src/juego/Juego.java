@@ -18,7 +18,7 @@ public class Juego extends InterfaceJuego {
 	
 	public Juego() {
 		// Inicializa el objeto entorno
-		this.entorno = new Entorno(this, "Titulo de TP - Grupo 9 - Monsegur - Apellido2 -Apellido3 - V0.01", 800, 600);
+		this.entorno = new Entorno(this, "Princesa Saltarina - Grupo 9 - Monsegur - Moragues - Escalante - V0.50", 800, 600);
 		// Inicializar lo que haga falta para el juego
 		// ...
 		this.fondo= new Fondo(entorno.ancho()/2, entorno.alto()/2);
@@ -103,10 +103,7 @@ public class Juego extends InterfaceJuego {
 		        princesa.saltar();
 		    }
 
-		    // Dibujar y mover balas si están activas
-		    if (entorno.sePresiono(entorno.TECLA_ESPACIO) && this.balas == null) {
-		        this.balas = princesa.disparar();
-		    }
+		    
 		    
 		 
 		 // Actualizar posición y estado de la princesa
@@ -115,14 +112,18 @@ public class Juego extends InterfaceJuego {
 		    // Dibujar la princesa después de los pisos para que aparezca encima de ellos
 		    princesa.dibujar(entorno);
 		    
+		 // Dibujar y mover balas si están activas
+		    if (entorno.sePresiono(entorno.TECLA_ESPACIO) && this.balas == null) {
+		        this.balas = princesa.disparar();
+		    }
 		    
 		    if (this.balas != null) {
-		        this.balas.dibujar(entorno);
-		        this.balas.mover();
-		        if (this.balas.getX() > entorno.ancho()) {
-		            this.balas = null;
-		        }
-		    }    
+	            this.balas.dibujar(entorno);
+	            this.balas.mover();
+	            if (this.balas.getX() > entorno.ancho() || this.balas.getX() < 0) {
+	                this.balas = null;
+	            }
+	        }
 	}
 	
 	@SuppressWarnings("unused")

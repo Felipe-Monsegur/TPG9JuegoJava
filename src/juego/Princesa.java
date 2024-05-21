@@ -29,7 +29,7 @@ public class Princesa {
 		this.ancho=40;
 		this.alto=50;
 		this.color=Color.PINK;
-		//this.direcion=;
+		this.direccion=1;
 		this.velocidadY=0;
 		this.gravedad=0.5;
 		this.enelaire=false;
@@ -43,16 +43,19 @@ public class Princesa {
 	public void moverDerecha(Entorno e) {
 		if(this.x+this.ancho/2<e.ancho())
 			this.x+=5;
+			this.direccion=1;
 	}
 	
 	public void moverIzquierda() {
 		if(this.x-this.ancho/2-3>=0) {
 			this.x-=5;
+			this.direccion=-1;
 		}
 	}
 	
 	public  Balas disparar() {
-		return new Balas(this.x, this.y);
+		return new Balas(this.x, this.y,this.direccion);
+		
 	}
 	
 	
