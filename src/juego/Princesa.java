@@ -17,6 +17,7 @@ public class Princesa {
 	private double gravedad;
 	private boolean enelaire;
 	private boolean cayendo;
+	private boolean saltando;
 	
 	
 	public Princesa(double x, double y) {
@@ -52,51 +53,53 @@ public class Princesa {
         if (!enelaire) {
             this.velocidadY=-12;
             enelaire=true;
+            saltando = true;
         }
     }
-	public void actualizar(Entorno e, Piso[] pisos, Suelo suelo) {
-	    if (enelaire) {
-	        this.y += this.velocidadY;
-	        this.velocidadY += gravedad;
+//	public void actualizar(Entorno e, Piso[] pisos, Suelo suelo) {
+//	    if (saltando) {
+//	        this.y += this.velocidadY;
+//	        this.velocidadY += gravedad;
+//
+//	        // Verificar colisiones con los ladrillos en los pisos
+//	        for (Piso piso : pisos) {
+//	            for (Ladrillo ladrillo : piso.getLadrillos()) {
+//	                if (colisionConLadrillo(ladrillo)) {
+//	                    // Si la princesa colisiona con un ladrillo del piso, ajustar su posición
+//	                    if (this.y - this.alto / 2 < ladrillo.getY() + ladrillo.getAlto() / 2) {
+//	                        this.y = ladrillo.getY() + ladrillo.getAlto() / 2 + this.alto / 2;
+//	                        this.velocidadY = 0;
+//	                    } else {
+//	                        saltando = false;
+//	                        this.velocidadY = 0;
+//	                    }
+//	                }
+//	            }
+//	        }
 
-	        // Verificar colisiones con los ladrillos en los pisos
-	        for (Piso piso : pisos) {
-	            for (Ladrillo ladrillo : piso.getLadrillos()) {
-	                if (colisionConLadrillo(ladrillo)) {
-	                    // Si la princesa colisiona con un ladrillo del piso, ajustar su posición
-	                    if (this.y - this.alto / 2 < ladrillo.getY() + ladrillo.getAlto() / 2) {
-	                        this.y = ladrillo.getY() + ladrillo.getAlto() / 2 + this.alto / 2;
-	                        this.velocidadY = 0;
-	                    } else {
-	                        enelaire = false;
-	                        this.velocidadY = 0;
-	                    }
-	                }
-	            }
-	        }
+//	        // Verificar colisiones con los ladrillos en el suelo
+//	        for (Ladrillo ladrillo : suelo.getSuelo()) {
+//	            if (colisionConLadrillo(ladrillo)) {
+//	                // Si la princesa colisiona con un ladrillo del suelo, ajustar su posición
+//	                if (this.y - this.alto / 2 < ladrillo.getY() + ladrillo.getAlto() / 2) {
+//	                    this.y = ladrillo.getY() + ladrillo.getAlto() / 2 + this.alto / 2;
+//	                    this.velocidadY = 0;
+//	                } else {
+//	                    saltando = false;
+//	                    this.velocidadY = 0;
+//	                }
+//	            }
+//	        }
 
-	        // Verificar colisiones con los ladrillos en el suelo
-	        for (Ladrillo ladrillo : suelo.getSuelo()) {
-	            if (colisionConLadrillo(ladrillo)) {
-	                // Si la princesa colisiona con un ladrillo del suelo, ajustar su posición
-	                if (this.y - this.alto / 2 < ladrillo.getY() + ladrillo.getAlto() / 2) {
-	                    this.y = ladrillo.getY() + ladrillo.getAlto() / 2 + this.alto / 2;
-	                    this.velocidadY = 0;
-	                } else {
-	                    enelaire = false;
-	                    this.velocidadY = 0;
-	                }
-	            }
-	        }
-
-	        // Verificar si la princesa ha caído al suelo
-	        if (enelaire && this.y + this.alto / 2 - 45 > e.alto()) {
-	            this.y = e.alto() - this.alto / 2 - 45;
-	            this.velocidadY = 0;
-	            enelaire = false;
-	        }
-	    }
-	}
+//	        // Verificar si la princesa ha caído al suelo
+//	        if (saltando && this.y + this.alto / 2 - 45 > e.alto()) {
+//	            this.y = e.alto() - this.alto / 2 - 45;
+//	            this.velocidadY = 0;
+//	            enelaire = false;
+//	            saltando= false;
+//	        }
+//	    }
+//	}
    
 
     
