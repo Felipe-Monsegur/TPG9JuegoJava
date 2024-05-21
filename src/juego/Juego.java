@@ -15,6 +15,8 @@ public class Juego extends InterfaceJuego {
 	private Princesa princesa;
 	private Balas balas;
 	private Trex trex;
+	private Hueso hueso;
+	private Random random;
 	
 	public Juego() {
 		// Inicializa el objeto entorno
@@ -35,8 +37,7 @@ public class Juego extends InterfaceJuego {
 	                    tipoBloque = 1;
 	                } else {
 	                    if (metales < 6 && j <= pisos[i].length - 3) {
-	                        int randomX = rand.nextInt(4); 
-	                        if (randomX == 3) { // Solo cuando randomX es 3 se crean 3 ladrillos de metal seguidos
+	                        if (rand.nextInt(4) == 3) { // Solo cuando randomX es 3 se crean 3 ladrillos de metal seguidos
 	                            tipoBloque = 3;
 	                            for (int k = 0; k < 3; k++) {
 	                                if (j + k < pisos[i].length) {
@@ -61,6 +62,7 @@ public class Juego extends InterfaceJuego {
         this.princesa = new Princesa(entorno.ancho()/2, entorno.alto() - 100); 
         this.balas = null;
         this.trex = new Trex(entorno.ancho(), entorno.alto() - 100); 
+        this.hueso = null;
 	     
 		// Inicia el juego!
 		this.entorno.iniciar();		
@@ -77,16 +79,32 @@ public class Juego extends InterfaceJuego {
 		// Procesamiento de un instante de tiempo
 		// ...
 		fondo.dibujar(entorno);
-//		suelo.dibujar(entorno);
-		
+		//dibuja cada Ladrillo
 		 for (Ladrillo[] piso : pisos) {
 	            for (Ladrillo ladrillo : piso) {
 	                ladrillo.dibujar(entorno);
 	            }
 	        }
-		  
-		 trex.dibujar(entorno);
-		 trex.mover(pisos, entorno);
+		 
+		 
+		 if (this.trex != null) {
+		        this.trex.dibujar(entorno);
+		        this.trex.mover(pisos, entorno); 
+		 }
+		 
+		 if (this.hueso == null) {
+		        this.hueso = trex.dispararHueso();
+		    }
+		       
+		 if (hueso != null) {
+	            hueso.dibujar(entorno);
+	            hueso.mover();
+	            if (this.hueso.getX() > entorno.ancho() || this.hueso.getX() < 0) {
+	                this.hueso = null;
+	            } 
+		 	}
+		    
+		 
 		 
 		 princesa.dibujar(entorno);
 

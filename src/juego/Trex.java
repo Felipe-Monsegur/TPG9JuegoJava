@@ -1,6 +1,7 @@
 package juego;
 
 import java.awt.Color;
+import java.util.Random;
 
 import entorno.Entorno;
 
@@ -14,6 +15,8 @@ public class Trex {
 	private double velocidadY;
 	private double gravedad;
 	private boolean enelaire;
+	private Random random;
+	private Hueso hueso;
 
 	public Trex(double x, double y) {
 		this.x = x;
@@ -21,11 +24,11 @@ public class Trex {
 		this.ancho = 40;
 		this.alto = 50;
 		this.color = Color.green;
-		this.direccion = -1;
-
+		this.direccion = 1;
 		this.velocidadY = 0;
 		this.gravedad = 0.5;
 		this.enelaire = false;
+	    this.random = new Random();
 
 	}
 
@@ -35,7 +38,6 @@ public class Trex {
 
 	public void mover(Ladrillo[][] pisos, Entorno e) {
 		boolean ensuelo = false; // verifica si la princesa está en el suelo
-
 		// verifica colisiones con bloques en todos los pisos
 		for (Ladrillo[] piso : pisos) {
 			for (Ladrillo ladrillo : piso) {
@@ -57,6 +59,9 @@ public class Trex {
 			velocidadY += gravedad;
 			y += velocidadY;
 			enelaire = true;
+			
+			
+			
 		}
 
 		// cuando llega a los bordes cambia de direccion
@@ -74,12 +79,20 @@ public class Trex {
 
 	public void moverderecha() {
 		this.x += 0.9;
+		this.direccion=1;
 	}
 
 	public void moverizquierda() {
 		this.x -= 0.9;
+		this.direccion=-1;
 	}
 
+	public Hueso dispararHueso() {
+		return new Hueso(this.x, this.y,this.direccion);
+	    
+
+	}
+	
 	private boolean colision(Ladrillo ladrillo) {
 		return this.x + this.ancho / 2 > ladrillo.getX() - ladrillo.getAncho() / 2
 				&& this.x - this.ancho / 2 < ladrillo.getX() + ladrillo.getAncho() / 2
