@@ -2,6 +2,8 @@ package juego;
 
 
 import java.awt.Color;
+import java.util.ArrayList;
+
 import entorno.Entorno;
 
 
@@ -10,15 +12,16 @@ public class Princesa {
 	private double y;
 	private double ancho;
 	private double alto;
-	private Color color;	
+	private Color color;
+	private int direccion;
 	
 	//variables de instancia para saltar
 	private double velocidadY;
 	private double gravedad;
 	private boolean enelaire;
-	private boolean cayendo;
-	private boolean saltando;
 	
+//	// Agregar lista de ladrillos para colisiones
+//    private ArrayList<Ladrillo> piso;
 	
 	public Princesa(double x, double y) {
 		this.x=x;
@@ -26,7 +29,7 @@ public class Princesa {
 		this.ancho=40;
 		this.alto=50;
 		this.color=Color.PINK;
-		
+		//this.direcion=;
 		this.velocidadY=0;
 		this.gravedad=0.5;
 		this.enelaire=false;
@@ -48,62 +51,54 @@ public class Princesa {
 		}
 	}
 	
-//	funciones para saltar	
-	public void saltar() {
-        if (!enelaire) {
-            this.velocidadY=-12;
-            enelaire=true;
-            saltando = true;
+	public  Balas disparar() {
+		return new Balas(this.x, this.y);
+	}
+	
+	
+	 public void mover(Ladrillo[][] pisos) {
+	        boolean ensuelo = false; // verifica si la princesa está en el suelo
+
+	        // verifica colisiones con bloques en todos los pisos
+	        for (Ladrillo[] piso : pisos) {
+	            for (Ladrillo ladrillo : piso) {
+	                if (colision(ladrillo)) {
+	                	//rebote para abajo
+	                	if (this.y - this.alto/2 > ladrillo.getY() + ladrillo.getAlto()/2) {
+	                		 y = ladrillo.getY() + ladrillo.getAlto() / 2 + this.alto / 2;
+	                		 velocidadY = -velocidadY; // Cambiar la dirección del movimiento
+	                        ensuelo = false; 
+	                	}
+	                	else if (velocidadY>0) { // si está cayendo
+	                        y = ladrillo.getY()-25 - this.alto/2 ;
+	                        enelaire = false;
+	                        velocidadY = 0;
+	                        ensuelo = true; // La princesa está en el suelo
+	                  
+	                    }
+	                }
+	            }
+	        }
+	        
+        // si la princesa no está en el suelo, cae
+        if (!ensuelo) {
+            velocidadY += gravedad;
+            y += velocidadY;
+            enelaire = true;
         }
     }
-//	public void actualizar(Entorno e, Piso[] pisos, Suelo suelo) {
-//	    if (saltando) {
-//	        this.y += this.velocidadY;
-//	        this.velocidadY += gravedad;
-//
-//	        // Verificar colisiones con los ladrillos en los pisos
-//	        for (Piso piso : pisos) {
-//	            for (Ladrillo ladrillo : piso.getLadrillos()) {
-//	                if (colisionConLadrillo(ladrillo)) {
-//	                    // Si la princesa colisiona con un ladrillo del piso, ajustar su posición
-//	                    if (this.y - this.alto / 2 < ladrillo.getY() + ladrillo.getAlto() / 2) {
-//	                        this.y = ladrillo.getY() + ladrillo.getAlto() / 2 + this.alto / 2;
-//	                        this.velocidadY = 0;
-//	                    } else {
-//	                        saltando = false;
-//	                        this.velocidadY = 0;
-//	                    }
-//	                }
-//	            }
-//	        }
 
-//	        // Verificar colisiones con los ladrillos en el suelo
-//	        for (Ladrillo ladrillo : suelo.getSuelo()) {
-//	            if (colisionConLadrillo(ladrillo)) {
-//	                // Si la princesa colisiona con un ladrillo del suelo, ajustar su posición
-//	                if (this.y - this.alto / 2 < ladrillo.getY() + ladrillo.getAlto() / 2) {
-//	                    this.y = ladrillo.getY() + ladrillo.getAlto() / 2 + this.alto / 2;
-//	                    this.velocidadY = 0;
-//	                } else {
-//	                    saltando = false;
-//	                    this.velocidadY = 0;
-//	                }
-//	            }
-//	        }
-
-//	        // Verificar si la princesa ha caído al suelo
-//	        if (saltando && this.y + this.alto / 2 - 45 > e.alto()) {
-//	            this.y = e.alto() - this.alto / 2 - 45;
-//	            this.velocidadY = 0;
-//	            enelaire = false;
-//	            saltando= false;
-//	        }
-//	    }
-//	}
-   
-
+	
+    // hace que el personaje salte
+    public void saltar() {
+        if (!enelaire) {
+            enelaire = true;
+            velocidadY = -10;
+        }
+    }
     
-    private boolean colisionConLadrillo(Ladrillo ladrillo) {
+    
+    private boolean colision(Ladrillo ladrillo) {
         return this.x + this.ancho / 2 > ladrillo.getX() - ladrillo.getAncho() / 2 &&
                 this.x - this.ancho / 2 < ladrillo.getX() + ladrillo.getAncho() / 2 &&
                 this.y + this.alto / 2 > ladrillo.getY() - ladrillo.getAlto() / 2 &&
