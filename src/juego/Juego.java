@@ -16,6 +16,8 @@ public class Juego extends InterfaceJuego {
 	private Balas balas;
 	private Trex trex;
 	private Hueso hueso;
+//	private Trex[][] trexs; //aparecer muchos rexs
+//	 private ArrayList<Hueso> huesos; //muchos huesos
 	private Random random;
 	
 	public Juego() {
@@ -59,10 +61,19 @@ public class Juego extends InterfaceJuego {
 	        }
 		
 	
-        this.princesa = new Princesa(entorno.ancho()/2, entorno.alto() - 100); 
+        this.princesa = new Princesa(entorno.ancho()/2, entorno.alto() - 70); 
         this.balas = null;
-        this.trex = new Trex(entorno.ancho(), entorno.alto() - 100); 
+        this.trex = new Trex(entorno.ancho() - 20, entorno.alto() - 70);
         this.hueso = null;
+        
+        
+//        this.trexs = new Trex[5][2]; // Crear 2 rexs por piso
+//        for (int i = 0; i < trexs.length; i++) {
+//            for (int j = 0; j < trexs[i].length; j++) {
+//                trexs[i][j] = new Trex(j*(entorno.ancho()), entorno.alto() - (70 + i * 140));
+//            }
+//        }
+        
 	     
 		// Inicia el juego!
 		this.entorno.iniciar();		
@@ -86,24 +97,60 @@ public class Juego extends InterfaceJuego {
 	            }
 	        }
 		 
+//		 for (int i = 0; i < trexs.length; i++) {
+//	            for (int j = 0; j < trexs[i].length; j++) {
+//	                if (trexs[i][j] != null) {
+//	                    trexs[i][j].dibujar(entorno);
+//	                    trexs[i][j].mover(pisos, entorno);
+//	                        Hueso nuevoHueso = trexs[i][j].dispararHueso();
+//	                        if (nuevoHueso != null) {
+//	                            huesos.add(nuevoHueso);
+//	                        }
+//	                    }
+//	                }
+//	            }
+//	        
+//		 // Lanzar huesos desde los Trex
+//		    for (int i = 0; i < trexs.length; i++) {
+//		        for (int j = 0; j < trexs[i].length; j++) {
+//		            if (trexs[i][j] != null) {
+//		                trexs[i][j].dibujar(entorno);
+//		                trexs[i][j].mover(pisos, entorno);
+//		            }
+//		        }
+//		    }
+//
+//		    // Eliminar huesos que chocan con el entorno
+//		    for (int i = 0; i < huesos.size(); i++) {
+//		        Hueso hueso = huesos.get(i);
+//		        hueso.dibujar(entorno);
+//		        hueso.mover();
+//		        if (hueso.chocaConEntorno(entorno)) {
+//		            huesos.remove(i);
+//		            i--; // Decrementar el índice para compensar el cambio en la lista
+//		        }
+//		    }
+		    
 		 
 		 if (this.trex != null) {
-		        this.trex.dibujar(entorno);
-		        this.trex.mover(pisos, entorno); 
-		 }
+				this.trex.dibujar(entorno);
+				this.trex.mover(pisos, entorno);
+			}
+
+			Random rand = new Random();
+			if (rand.nextInt(45) == 3 && this.hueso == null) {
+				this.hueso = trex.dispararHueso();
+			}
+
+			if (hueso != null) {
+				hueso.dibujar(entorno);
+				hueso.mover();
+				if (this.hueso.getX() > entorno.ancho() || this.hueso.getX() < 0) {
+					this.hueso = null;
+				}
+			}
 		 
-		 if (this.hueso == null) {
-		        this.hueso = trex.dispararHueso();
-		    }
-		       
-		 if (hueso != null) {
-	            hueso.dibujar(entorno);
-	            hueso.mover();
-	            if (this.hueso.getX() > entorno.ancho() || this.hueso.getX() < 0) {
-	                this.hueso = null;
-	            } 
-		 	}
-		    
+		 
 		 
 		 
 		 princesa.dibujar(entorno);

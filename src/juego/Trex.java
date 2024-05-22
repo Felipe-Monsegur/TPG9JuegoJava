@@ -1,9 +1,11 @@
 package juego;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.util.Random;
 
 import entorno.Entorno;
+import entorno.Herramientas;
 
 public class Trex {
 	private double x;
@@ -12,6 +14,8 @@ public class Trex {
 	private double alto;
 	private Color color;
 	private int direccion;
+	private Image imag;
+	
 	private double velocidadY;
 	private double gravedad;
 	private boolean enelaire;
@@ -29,11 +33,18 @@ public class Trex {
 		this.gravedad = 0.5;
 		this.enelaire = false;
 	    this.random = new Random();
+	    this.imag = Herramientas.cargarImagen("trex.png");
 
 	}
 
 	public void dibujar(Entorno e) {
-		e.dibujarRectangulo(x, y, ancho, alto, 0, color);
+//		e.dibujarRectangulo(x, y, ancho, alto, 0, color);
+		e.dibujarImagen(imag, x, y-7, 0, 0.1);
+		if (direccion==1) {
+			this.imag = Herramientas.cargarImagen("trex.png");
+		}else {
+			this.imag = Herramientas.cargarImagen("trexIzq.png");
+		}
 	}
 
 	public void mover(Ladrillo[][] pisos, Entorno e) {

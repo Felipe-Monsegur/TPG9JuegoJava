@@ -2,9 +2,11 @@ package juego;
 
 
 import java.awt.Color;
+import java.awt.Image;
 import java.util.ArrayList;
 
 import entorno.Entorno;
+import entorno.Herramientas;
 
 
 public class Princesa {
@@ -14,6 +16,7 @@ public class Princesa {
 	private double alto;
 	private Color color;
 	private int direccion;
+	private Image imag;
 	
 	//variables de instancia para saltar
 	private double velocidadY;
@@ -33,13 +36,21 @@ public class Princesa {
 		this.velocidadY=0;
 		this.gravedad=0.5;
 		this.enelaire=false;
+		this.imag = Herramientas.cargarImagen("princesa.png");
 
 	}
 	
 	public void dibujar(Entorno e) {
-		e.dibujarRectangulo(x, y, ancho, alto, 0, color);
-		
+//		e.dibujarRectangulo(x, y, ancho, alto, 0, color);
+		e.dibujarImagen(imag, x, y-7, 0, 0.13);
+		if (direccion==1) {
+			this.imag = Herramientas.cargarImagen("princesa.png");
+		}else {
+			this.imag = Herramientas.cargarImagen("princesaIzq.png");
+		}
 	}
+	
+	
 	public void moverDerecha(Entorno e) {
 		if(this.x+this.ancho/2<e.ancho())
 			this.x+=5;
@@ -67,9 +78,9 @@ public class Princesa {
 	            for (Ladrillo ladrillo : piso) {
 	                if (colision(ladrillo)) {
 	                	//rebote para abajo
-	                	if (this.y - this.alto/2 > ladrillo.getY() + ladrillo.getAlto()/2) {
+	                	if (this.y - this.alto/2 > ladrillo.getY() - ladrillo.getAlto()/2) {
 	                		 y = ladrillo.getY() + ladrillo.getAlto() / 2 + this.alto / 2;
-	                		 velocidadY = -velocidadY; // Cambiar la dirección del movimiento
+	                		 velocidadY = -velocidadY*0.1; // Cambiar la dirección del movimiento multiplico por 0.3 para que no rebote tan rapido
 	                        ensuelo = false; 
 	                	}
 	                	else if (velocidadY>0) { // si está cayendo
