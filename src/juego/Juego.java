@@ -90,12 +90,15 @@ public class Juego extends InterfaceJuego {
 		// Procesamiento de un instante de tiempo
 		// ...
 		fondo.dibujar(entorno);
+		
 		//dibuja cada Ladrillo
-		 for (Ladrillo[] piso : pisos) {
-	            for (Ladrillo ladrillo : piso) {
+		for (Ladrillo[] piso : pisos) {
+	        for (Ladrillo ladrillo : piso) {
+	            
 	                ladrillo.dibujar(entorno);
-	            }
+	            
 	        }
+	    }
 		 
 //		 for (int i = 0; i < trexs.length; i++) {
 //	            for (int j = 0; j < trexs[i].length; j++) {

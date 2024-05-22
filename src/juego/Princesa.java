@@ -74,21 +74,24 @@ public class Princesa {
 	        boolean ensuelo = false; // verifica si la princesa está en el suelo
 
 	        // verifica colisiones con bloques en todos los pisos
-	        for (Ladrillo[] piso : pisos) {
-	            for (Ladrillo ladrillo : piso) {
-	                if (colision(ladrillo)) {
-	                	//rebote para abajo
-	                	if (this.y - this.alto/2 > ladrillo.getY() - ladrillo.getAlto()/2) {
-	                		 y = ladrillo.getY() + ladrillo.getAlto() / 2 + this.alto / 2;
-	                		 velocidadY = -velocidadY*0.1; // Cambiar la dirección del movimiento multiplico por 0.3 para que no rebote tan rapido
-	                        ensuelo = false; 
-	                	}
-	                	else if (velocidadY>0) { // si está cayendo
-	                        y = ladrillo.getY()-25 - this.alto/2 ;
+	        for (int i = 0; i < pisos.length; i++) {
+	            for (int j = 0; j < pisos[i].length; j++) {
+	                Ladrillo ladrillo = pisos[i][j];
+	                if (!ladrillo.isRoto() && colision(ladrillo)) {
+	                    if (this.y - this.alto / 2 > ladrillo.getY() - ladrillo.getAlto() / 2) {
+	                        y = ladrillo.getY() + ladrillo.getAlto() / 2 + this.alto / 2;
+	                        velocidadY = -velocidadY * 0.1;
+	                        ensuelo = false;
+	                        // Romper el ladrillo encima si es destructible
+	                        if (ladrillo.isDestructible()) {
+	                            ladrillo.setRoto(true);
+	                        }
+	                    } else if (velocidadY > 0) {
+	                        y = ladrillo.getY() - 25 - this.alto / 2;
 	                        enelaire = false;
 	                        velocidadY = 0;
-	                        ensuelo = true; // La princesa está en el suelo
-	                  
+	                        ensuelo = true;
+	                        
 	                    }
 	                }
 	            }
@@ -107,15 +110,15 @@ public class Princesa {
     public void saltar() {
         if (!enelaire) {
             enelaire = true;
-            velocidadY = -10;
+            velocidadY = -12.5;
         }
     }
     
     
     private boolean colision(Ladrillo ladrillo) {
-        return this.x + this.ancho / 2 > ladrillo.getX() - ladrillo.getAncho() / 2 &&
-                this.x - this.ancho / 2 < ladrillo.getX() + ladrillo.getAncho() / 2 &&
-                this.y + this.alto / 2 > ladrillo.getY() - ladrillo.getAlto() / 2 &&
-                this.y - this.alto / 2 < ladrillo.getY() + ladrillo.getAlto() / 2;
+    	return this.x + this.ancho / 2 > ladrillo.getX() - ladrillo.getAncho() / 2 &&
+               this.x - this.ancho / 2 < ladrillo.getX() + ladrillo.getAncho() / 2 &&
+               this.y + this.alto / 2 > ladrillo.getY() - ladrillo.getAlto() / 2 &&
+               this.y - this.alto / 2 < ladrillo.getY() + ladrillo.getAlto() / 2;
     }
 }
