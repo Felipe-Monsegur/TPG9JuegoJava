@@ -66,13 +66,14 @@ public class Juego extends InterfaceJuego {
         this.trex = new Trex(entorno.ancho() - 20, entorno.alto() - 70);
         this.hueso = null;
         
-        
-//        this.trexs = new Trex[5][2]; // Crear 2 rexs por piso
+//        Random random = new Random();
+//        this.trexs = new Trex[4][2]; // Crear 2 rexs por piso
 //        for (int i = 0; i < trexs.length; i++) {
-//            for (int j = 0; j < trexs[i].length; j++) {
-//                trexs[i][j] = new Trex(j*(entorno.ancho()), entorno.alto() - (70 + i * 140));
+//            for (int j = 0; j < trexs[i].length; j++) {    
+//                trexs[i][j] = new Trex(random.nextInt(entorno.ancho()), entorno.alto() - (70 + i * 140));// Genera un número aleatorio entre 0 y el ancho del entorno
 //            }
 //        }
+     
         
 	     
 		// Inicia el juego!
@@ -105,13 +106,14 @@ public class Juego extends InterfaceJuego {
 //	                if (trexs[i][j] != null) {
 //	                    trexs[i][j].dibujar(entorno);
 //	                    trexs[i][j].mover(pisos, entorno);
-//	                        Hueso nuevoHueso = trexs[i][j].dispararHueso();
-//	                        if (nuevoHueso != null) {
-//	                            huesos.add(nuevoHueso);
+////	                        Hueso nuevoHueso = trexs[i][j].dispararHueso();
+////	                        if (nuevoHueso != null) {
+////	                            huesos.add(nuevoHueso);
 //	                        }
 //	                    }
 //	                }
-//	            }
+	            
+		
 //	        
 //		 // Lanzar huesos desde los Trex
 //		    for (int i = 0; i < trexs.length; i++) {
@@ -152,9 +154,7 @@ public class Juego extends InterfaceJuego {
 					this.hueso = null;
 				}
 			}
-		 
-		 
-		 
+		  
 		 
 		 princesa.dibujar(entorno);
 
