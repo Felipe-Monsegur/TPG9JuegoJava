@@ -22,7 +22,7 @@ public class Hueso {
 		this.color = Color.RED;
 		this.diametro = 25;
 		this.angulo = 0;
-		this.velocidad = 3;
+		this.velocidad = 2;
 		this.imag = Herramientas.cargarImagen("hueso.png");
 		this.direccion = direccion;
 	}

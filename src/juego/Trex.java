@@ -21,10 +21,6 @@ public class Trex {
 	private boolean enelaire;
 	private Random random;
 	private Hueso hueso;
-	public double getX() {
-		return x;
-	}
-
 
 	public Trex(double x, double y) {
 		this.x = x;
@@ -40,16 +36,6 @@ public class Trex {
 	    this.imag = Herramientas.cargarImagen("trex.png");
 
 	}
-	public double getY() {
-		return y;
-	}
-	public double getAncho() {
-		return ancho;
-	}
-	public double getAlto() {
-		return alto;
-	}
-
 
 	public void dibujar(Entorno e) {
 //		e.dibujarRectangulo(x, y, ancho, alto, 0, color);
@@ -64,9 +50,10 @@ public class Trex {
 	public void mover(Ladrillo[][] pisos, Entorno e) {
 		boolean ensuelo = false; // verifica si la princesa está en el suelo
 		// verifica colisiones con bloques en todos los pisos
-		for (Ladrillo[] piso : pisos) {
-			for (Ladrillo ladrillo : piso) {
-				if (ladrillo != null) {
+		for (int i = 0; i < pisos.length; i++) {
+            for (int j = 0; j < pisos[i].length; j++) {
+                Ladrillo ladrillo = pisos[i][j];
+                if (ladrillo != null  && colision(ladrillo)) {
 					// rebote para abajo
 					if (velocidadY > 0) { // si está cayendo
 						y = ladrillo.getY() - 25 - this.alto / 2;
@@ -112,10 +99,21 @@ public class Trex {
 		this.direccion=-1;
 	}
 
-	public Hueso dispararHueso() {
-		return new Hueso(this.x, this.y,this.direccion);
-	    
+	
+	public Hueso getHueso() {
+	    return this.hueso;
+	}
 
+	public void setHueso(Hueso hueso) {
+	    this.hueso = hueso;
+	}
+
+	
+	
+	public void dispararHueso() {
+		if (hueso == null && random.nextInt(50) == 2) { //random para que no disparen SIEMPRE
+			hueso = new Hueso(this.x, this.y, this.direccion);
+		}
 	}
 	
 	private boolean colision(Ladrillo ladrillo) {
@@ -124,7 +122,6 @@ public class Trex {
 				&& this.y + this.alto / 2 > ladrillo.getY() - ladrillo.getAlto() / 2
 				&& this.y - this.alto / 2 < ladrillo.getY() + ladrillo.getAlto() / 2;
 	}
-	
 	public boolean colisionConBala(Balas balas) {
 		 return balas!=null && balas.getX() + balas.getDiametro() / 2 > this.x - this.ancho / 2 &&
 		           balas.getX() - balas.getDiametro() / 2 < this.x + this.ancho / 2 &&

@@ -77,7 +77,7 @@ public class Princesa {
 	        for (int i = 0; i < pisos.length; i++) {
 	            for (int j = 0; j < pisos[i].length; j++) {
 	                Ladrillo ladrillo = pisos[i][j];
-	                if (ladrillo != null && !ladrillo.isRoto() && colision(ladrillo)) {
+	                if (ladrillo != null  && colision(ladrillo)) {
 	                    if (this.y - this.alto / 2 > ladrillo.getY() - ladrillo.getAlto() / 2) {
 	                        y = ladrillo.getY() + ladrillo.getAlto() / 2 + this.alto / 2;
 	                        velocidadY = -velocidadY * 0.1;
