@@ -52,7 +52,7 @@ public class Trex {
 		// verifica colisiones con bloques en todos los pisos
 		for (Ladrillo[] piso : pisos) {
 			for (Ladrillo ladrillo : piso) {
-				if (!ladrillo.isRoto() && colision(ladrillo)) {
+				if (ladrillo != null) {
 					// rebote para abajo
 					if (velocidadY > 0) { // si está cayendo
 						y = ladrillo.getY() - 25 - this.alto / 2;

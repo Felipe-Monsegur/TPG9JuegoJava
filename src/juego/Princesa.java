@@ -77,14 +77,14 @@ public class Princesa {
 	        for (int i = 0; i < pisos.length; i++) {
 	            for (int j = 0; j < pisos[i].length; j++) {
 	                Ladrillo ladrillo = pisos[i][j];
-	                if (!ladrillo.isRoto() && colision(ladrillo)) {
+	                if (ladrillo != null && !ladrillo.isRoto() && colision(ladrillo)) {
 	                    if (this.y - this.alto / 2 > ladrillo.getY() - ladrillo.getAlto() / 2) {
 	                        y = ladrillo.getY() + ladrillo.getAlto() / 2 + this.alto / 2;
 	                        velocidadY = -velocidadY * 0.1;
 	                        ensuelo = false;
-	                        // Romper el ladrillo encima si es destructible
+	                        // Romper el ladrillo de arriba si es destructible
 	                        if (ladrillo.isDestructible()) {
-	                            ladrillo.setRoto(true);
+	                        	 pisos[i][j] = null; // ladrillo  null "lo rompe"
 	                        }
 	                    } else if (velocidadY > 0) {
 	                        y = ladrillo.getY() - 25 - this.alto / 2;

@@ -93,13 +93,13 @@ public class Juego extends InterfaceJuego {
 		fondo.dibujar(entorno);
 		
 		//dibuja cada Ladrillo
-		for (Ladrillo[] piso : pisos) {
-	        for (Ladrillo ladrillo : piso) {
-	            
-	                ladrillo.dibujar(entorno);
-	            
-	        }
-	    }
+		  for (Ladrillo[] piso : pisos) {
+		        for (Ladrillo ladrillo : piso) {
+		            if (ladrillo != null) {
+		                ladrillo.dibujar(entorno);
+		            }
+		        }
+		    }
 		 
 //		 for (int i = 0; i < trexs.length; i++) {
 //	            for (int j = 0; j < trexs[i].length; j++) {
