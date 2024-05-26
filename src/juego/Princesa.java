@@ -67,13 +67,13 @@ public class Princesa {
 	
 	public void moverDerecha(Entorno e) {
 		if(this.x+this.ancho/2<e.ancho())
-			this.x+=5;
+			this.x+=4;
 			this.direccion=1;
 	}
 	
 	public void moverIzquierda() {
 		if(this.x-this.ancho/2-3>=0) {
-			this.x-=5;
+			this.x-=4;
 			this.direccion=-1;
 		}
 	}

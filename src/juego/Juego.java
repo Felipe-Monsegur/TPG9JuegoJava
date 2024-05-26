@@ -1,5 +1,6 @@
 package juego;
 
+import java.awt.Font;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Random;
@@ -21,6 +22,8 @@ public class Juego extends InterfaceJuego {
 	private Trex[][] trexs; // aparecer muchos rexs metodo 1
 	private Random random;
 	private Image imag;
+	private int trexsEliminados;
+	private int puntos;
 
 	public Juego() {
 		// Inicializa el objeto entorno
@@ -65,6 +68,8 @@ public class Juego extends InterfaceJuego {
 			}
 		}
 
+		this.puntos= 0;
+		this.trexsEliminados= 0;
 		this.princesa = new Princesa(entorno.ancho() / 2, entorno.alto() - 70);
 		this.balas = null;
 		this.hueso = null;
@@ -109,7 +114,8 @@ public class Juego extends InterfaceJuego {
 		// Procesamiento de un instante de tiempo
 		// ...
 		fondo.dibujar(entorno);
-
+		
+       
 		// dibuja cada Ladrillo
 		for (Ladrillo[] piso : pisos) {
 			for (Ladrillo ladrillo : piso) {
@@ -118,6 +124,9 @@ public class Juego extends InterfaceJuego {
 				}
 			}
 		}
+		entorno.cambiarFont("Minecraft", 23, java.awt.Color.black);
+		 entorno.escribirTexto("TREXS ELIMINADOS:"+this.trexsEliminados, 0, entorno.alto()-24);
+	     entorno.escribirTexto("PUNTOS:"+this.puntos, 0, entorno.alto()-1);
 
 //        APARECER MUCHOS REXS METODO 1
 		for (int i = 0; i < trexs.length; i++) {
@@ -216,6 +225,8 @@ public class Juego extends InterfaceJuego {
 						if (trexs[i][j] != null && trexs[i][j].colisionConBala(this.balas)) {
 							trexs[i][j] = null; // convierte en null al trex y a las balas
 							this.balas = null;
+							this.trexsEliminados++; // Incrementar contador de trexs eliminados
+		                    this.puntos += 2;
 						}
 					}
 
@@ -237,7 +248,7 @@ public class Juego extends InterfaceJuego {
 		        // Detectar si se presiona la tecla 'r' para reiniciar el juego
 		        }	    	
 		 if (entorno.sePresiono('r')) {
-			 this.entorno.iniciar();
+			 Juego game = new Juego();
 		    }
 	}
 
