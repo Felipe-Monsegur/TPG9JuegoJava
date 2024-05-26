@@ -71,7 +71,7 @@ public class Juego extends InterfaceJuego {
 
 		this.puntos= 0;
 		this.trexsEliminados= 0;
-		this.vidas= 10;
+		this.vidas= 3;
 		this.princesa = new Princesa(entorno.ancho() / 2, entorno.alto() - 70);
 		this.balas = null;
 		this.hueso = null;
@@ -254,15 +254,27 @@ public class Juego extends InterfaceJuego {
 		}
 		
 		 if (this.princesa == null ) {
-			// Marcar que el juego ha terminado
+			// Juego que perdiste el juego
 			 	this.imag = Herramientas.cargarImagen("fondonegro.png");
 			 	entorno.dibujarImagen(imag, entorno.ancho()/2, entorno.alto()/2, 0, 1);
-		        entorno.cambiarFont("Arial", 40, java.awt.Color.white);
+		        entorno.cambiarFont("Calibri", 50, java.awt.Color.red);
+		        entorno.escribirTexto("PERDISTE", entorno.ancho() / 2 -110, entorno.alto() / 2-50);
+		        entorno.cambiarFont("Calibri", 40, java.awt.Color.white);
 		        entorno.escribirTexto("JUEGO TERMINADO", entorno.ancho() / 2 -180, entorno.alto() / 2);
-		        entorno.escribirTexto("Presiona [r] para volver a jugar", entorno.ancho() / 2 - 250, entorno.alto() / 2 + 50);
-		       
+		        entorno.escribirTexto("Presiona [r] para volver a jugar", entorno.ancho() / 2 - 250, entorno.alto() / 2 + 50);  
 		        // Detectar si se presiona la tecla 'r' para reiniciar el juego
-		        }	    	
+		        }
+		 if (this.princesa != null && princesa.getY() < 0) {
+		        // Marcar que ganaste el juego
+		        this.imag = Herramientas.cargarImagen("fondonegro.png");
+		        entorno.dibujarImagen(imag, entorno.ancho() / 2, entorno.alto() / 2, 0, 1);
+		        entorno.cambiarFont("Calibri", 50, java.awt.Color.green);
+		        entorno.escribirTexto("GANASTE", entorno.ancho() / 2 -110, entorno.alto() / 2-50);
+		        entorno.cambiarFont("Calibri", 40, java.awt.Color.white);
+		        entorno.escribirTexto("JUEGO TERMINADO", entorno.ancho() / 2 - 180, entorno.alto() / 2);
+		        entorno.escribirTexto("Presiona [r] para volver a jugar", entorno.ancho() / 2 - 250, entorno.alto() / 2 + 50);
+		        // Detectar si se presiona la tecla 'r' para reiniciar el juego
+		    }
 		 if (entorno.sePresiono('r')) {
 			 Juego game = new Juego();
 		    }
