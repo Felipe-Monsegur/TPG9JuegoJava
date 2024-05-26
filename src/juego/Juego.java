@@ -14,9 +14,10 @@ public class Juego extends InterfaceJuego {
 	private Ladrillo[][] pisos;
 	private Princesa princesa;
 	private Balas balas;
-	private Trex trex;
+//	private Trex trex;
 	private Hueso hueso;
-//	private Trex[][] trexs; //aparecer muchos rexs
+	private Trex[] trexs; //aparecer muchos rexs
+//	private Trex[][] trexs; //aparecer muchos rexs metodo 1
 //	 private ArrayList<Hueso> huesos; //muchos huesos
 	private Random random;
 	
@@ -63,9 +64,18 @@ public class Juego extends InterfaceJuego {
 	
         this.princesa = new Princesa(entorno.ancho()/2, entorno.alto() - 70); 
         this.balas = null;
-        this.trex = new Trex(entorno.ancho() - 20, entorno.alto() - 70);
+//        this.trex = new Trex(entorno.ancho() - 20, entorno.alto() - 70);
         this.hueso = null;
         
+        Random random=new Random();
+        this.trexs=new Trex[4]; // Crear 4 trex aleatoriamente
+        
+        for (int i=0; i<trexs.length; i++) {
+                trexs[i]=new Trex(random.nextInt(entorno.ancho()), entorno.alto()-(70+i*140));// Genera un número aleatorio entre 0 y el ancho del entorno
+        }
+        
+        
+//        APARECER MUCHOS REXS METODO 1
 //        Random random = new Random();
 //        this.trexs = new Trex[4][2]; // Crear 2 rexs por piso
 //        for (int i = 0; i < trexs.length; i++) {
@@ -101,6 +111,9 @@ public class Juego extends InterfaceJuego {
 		        }
 		    }
 		 
+		  
+		  
+//        APARECER MUCHOS REXS METODO 1
 //		 for (int i = 0; i < trexs.length; i++) {
 //	            for (int j = 0; j < trexs[i].length; j++) {
 //	                if (trexs[i][j] != null) {
@@ -114,7 +127,7 @@ public class Juego extends InterfaceJuego {
 //	                }
 	            
 		
-//	        
+//	      METODO 1
 //		 // Lanzar huesos desde los Trex
 //		    for (int i = 0; i < trexs.length; i++) {
 //		        for (int j = 0; j < trexs[i].length; j++) {
@@ -137,23 +150,33 @@ public class Juego extends InterfaceJuego {
 //		    }
 		    
 		 
-		 if (this.trex != null) {
-				this.trex.dibujar(entorno);
-				this.trex.mover(pisos, entorno);
-			}
+//        esto dibujaba a UN solo trex
+//        if (this.trex != null) {
+//            this.trex.dibujar(entorno);
+//            this.trex.mover(pisos, entorno);
+//        }
 
-			Random rand = new Random();
-			if (rand.nextInt(45) == 3 && this.hueso == null) {
-				this.hueso = trex.dispararHueso();
-			}
-
-			if (hueso != null) {
-				hueso.dibujar(entorno);
-				hueso.mover();
-				if (this.hueso.getX() > entorno.ancho() || this.hueso.getX() < 0) {
-					this.hueso = null;
-				}
-			}
+		  //recorre la lista de trexs y los dibuja
+	        for (int i=0; i<trexs.length; i++) {
+	            if (trexs[i]!=null) {
+	                trexs[i].dibujar(entorno);
+	                trexs[i].mover(pisos, entorno);
+	            }
+	        }
+		  
+//		  DISPARA HUESO 1 SOLO trex
+//			Random rand = new Random();
+//			if (rand.nextInt(45) == 3 && this.hueso == null) {
+//				this.hueso = trex.dispararHueso();
+//			}
+//
+//			if (hueso != null) {
+//				hueso.dibujar(entorno);
+//				hueso.mover();
+//				if (this.hueso.getX() > entorno.ancho() || this.hueso.getX() < 0) {
+//					this.hueso = null;
+//				}
+//			}
 		  
 		 
 		 princesa.dibujar(entorno);
@@ -185,11 +208,21 @@ public class Juego extends InterfaceJuego {
 		        this.balas = princesa.disparar();
 		    }
 		    
-		    if (this.balas != null) {
+		  //dibuja las balas
+	        if (this.balas!=null) {
 	            this.balas.dibujar(entorno);
 	            this.balas.mover();
-	            if (this.balas.getX() > entorno.ancho() || this.balas.getX() < 0) {
-	                this.balas = null;
+
+	            //detecta colision de la bala con los trex!!!!
+	            for (int i=0; i<trexs.length; i++) {
+	                if (trexs[i]!=null && trexs[i].colisionConBala(this.balas)) {
+	                    trexs[i]=null; //convierte en null al trex y a las balas
+	                    this.balas=null; 
+	                }
+	            }
+
+	            if (this.balas!=null && (this.balas.getX()>entorno.ancho()||this.balas.getX()<0)) {
+	                this.balas=null;
 	            }
 	        }
 	}

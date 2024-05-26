@@ -21,6 +21,10 @@ public class Trex {
 	private boolean enelaire;
 	private Random random;
 	private Hueso hueso;
+	public double getX() {
+		return x;
+	}
+
 
 	public Trex(double x, double y) {
 		this.x = x;
@@ -36,6 +40,16 @@ public class Trex {
 	    this.imag = Herramientas.cargarImagen("trex.png");
 
 	}
+	public double getY() {
+		return y;
+	}
+	public double getAncho() {
+		return ancho;
+	}
+	public double getAlto() {
+		return alto;
+	}
+
 
 	public void dibujar(Entorno e) {
 //		e.dibujarRectangulo(x, y, ancho, alto, 0, color);
@@ -110,5 +124,11 @@ public class Trex {
 				&& this.y + this.alto / 2 > ladrillo.getY() - ladrillo.getAlto() / 2
 				&& this.y - this.alto / 2 < ladrillo.getY() + ladrillo.getAlto() / 2;
 	}
-
+	
+	public boolean colisionConBala(Balas balas) {
+		 return balas!=null && balas.getX() + balas.getDiametro() / 2 > this.x - this.ancho / 2 &&
+		           balas.getX() - balas.getDiametro() / 2 < this.x + this.ancho / 2 &&
+		           balas.getY() + balas.getDiametro() / 2 > this.y - this.alto / 2 &&
+		           balas.getY() - balas.getDiametro() / 2 < this.y + this.alto / 2;
+	}
 }

@@ -26,6 +26,18 @@ public class Balas {
 		this.imag = Herramientas.cargarImagen("bolaFuego.png");
 		this.direccion = direccion;
 	}
+	
+	
+	
+	public double getDiametro() {
+		return diametro;
+	}
+	public void setDiametro(double diametro) {
+		this.diametro = diametro;
+	}
+
+
+
 	public void dibujar(Entorno e) {
 		e.dibujarCirculo(this.x, this.y, this.diametro, this.color);
 		e.dibujarImagen(imag, x, y, x * 0.02, 2.5);
