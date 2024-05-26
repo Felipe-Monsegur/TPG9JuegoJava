@@ -40,6 +40,20 @@ public class Princesa {
 
 	}
 	
+	public double getX() {
+		return x;
+	}
+	public double getY() {
+		return y;
+	}
+	public double getAncho() {
+		return ancho;
+	}
+	public double getAlto() {
+		return alto;
+	}
+
+
 	public void dibujar(Entorno e) {
 //		e.dibujarRectangulo(x, y, ancho, alto, 0, color);
 		e.dibujarImagen(imag, x, y-7, 0, 0.13);
@@ -121,4 +135,7 @@ public class Princesa {
                this.y + this.alto / 2 > ladrillo.getY() - ladrillo.getAlto() / 2 &&
                this.y - this.alto / 2 < ladrillo.getY() + ladrillo.getAlto() / 2;
     }
+    
+    
+    
 }

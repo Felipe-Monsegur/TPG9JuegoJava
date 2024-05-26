@@ -26,6 +26,23 @@ public class Hueso {
 		this.imag = Herramientas.cargarImagen("hueso.png");
 		this.direccion = direccion;
 	}
+	
+	
+	
+	
+	public double getDiametro() {
+		return diametro;
+	}
+	public void setX(double x) {
+		this.x = x;
+	}
+	public void setY(double y) {
+		this.y = y;
+	}
+
+
+
+
 	public void dibujar(Entorno e) {
 //		e.dibujarCirculo(this.x, this.y, this.diametro, this.color);
 		e.dibujarImagen(imag, x, y, x * 0.02, 1.6);
@@ -43,6 +60,23 @@ public class Hueso {
 			return true;
 		}
 		return false;
+	}
+	
+	
+	public boolean colisionConBala(Balas bala) {
+	    return bala != null && 
+	           this.x + this.diametro / 2 > bala.getX() - bala.getDiametro() / 2 &&
+	           this.x - this.diametro / 2 < bala.getX() + bala.getDiametro() / 2 &&
+	           this.y + this.diametro / 2 > bala.getY() - bala.getDiametro() / 2 &&
+	           this.y - this.diametro / 2 < bala.getY() + bala.getDiametro() / 2;
+	}
+	
+	public boolean colisionConPrincesa(Princesa princesa) {
+	    return princesa != null && 
+	           this.x + this.diametro / 2 > princesa.getX() - princesa.getAncho() / 2 &&
+	           this.x - this.diametro / 2 < princesa.getX() + princesa.getAncho() / 2 &&
+	           this.y + this.diametro / 2 > princesa.getY() - princesa.getAlto() / 2 &&
+	           this.y - this.diametro / 2 < princesa.getY() + princesa.getAlto() / 2;
 	}
 	
 	public double getX() {
