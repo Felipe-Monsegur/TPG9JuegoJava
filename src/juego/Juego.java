@@ -28,7 +28,7 @@ public class Juego extends InterfaceJuego {
 
 	public Juego() {
 		// Inicializa el objeto entorno
-		this.entorno = new Entorno(this, "Princesa Saltarina - Grupo 9 - Monsegur - Moragues - Escalante - V0.50", 800,600);
+		this.entorno = new Entorno(this, "Princesa Saltarina - Grupo 9 - Monsegur - Moragues - Escalante - V0.50", 1500,600);
 		// Inicializar lo que haga falta para el juego
 		// ...
 		
@@ -266,6 +266,7 @@ public class Juego extends InterfaceJuego {
 		        }
 		 if (this.princesa != null && princesa.getY() < 0) {
 		        // Marcar que ganaste el juego
+			 	princesa.setY(-10000);
 		        this.imag = Herramientas.cargarImagen("fondonegro.png");
 		        entorno.dibujarImagen(imag, entorno.ancho() / 2, entorno.alto() / 2, 0, 1);
 		        entorno.cambiarFont("Calibri", 50, java.awt.Color.green);
