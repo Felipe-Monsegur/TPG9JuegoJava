@@ -22,7 +22,6 @@ public class Juego extends InterfaceJuego {
 	private Random random;
 	private Image imag;
 
-
 	public Juego() {
 		// Inicializa el objeto entorno
 		this.entorno = new Entorno(this, "Princesa Saltarina - Grupo 9 - Monsegur - Moragues - Escalante - V0.50", 800,600);
@@ -228,20 +227,18 @@ public class Juego extends InterfaceJuego {
 			}
 		}
 		
-		 if (this.princesa == null) {
+		 if (this.princesa == null ) {
 			// Marcar que el juego ha terminado
 			 	entorno.dibujarImagen(imag, entorno.ancho()/2, entorno.alto()/2, 0, 1);
 		        entorno.cambiarFont("Arial", 40, java.awt.Color.white);
 		        entorno.escribirTexto("JUEGO TERMINADO", entorno.ancho() / 2 -180, entorno.alto() / 2);
 		        entorno.escribirTexto("Presiona [r] para volver a jugar", entorno.ancho() / 2 - 250, entorno.alto() / 2 + 50);
+		       
 		        // Detectar si se presiona la tecla 'r' para reiniciar el juego
-		        if(entorno.sePresiono('r')) {
-		        		Juego game = new Juego();
-		        	}
-		        }
-		
-		    	
-		
+		        }	    	
+		 if (entorno.sePresiono('r')) {
+			 this.entorno.iniciar();
+		    }
 	}
 
 	@SuppressWarnings("unused")
