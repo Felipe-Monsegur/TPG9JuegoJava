@@ -1,9 +1,11 @@
 package juego;
 
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Random;
 
 import entorno.Entorno;
+import entorno.Herramientas;
 import entorno.InterfaceJuego;
 
 public class Juego extends InterfaceJuego {
@@ -18,14 +20,15 @@ public class Juego extends InterfaceJuego {
 //	private Trex[] trexs; // aparecer muchos rexs
 	private Trex[][] trexs; // aparecer muchos rexs metodo 1
 	private Random random;
-	 private boolean juegoTerminado;
+	private Image imag;
+
 
 	public Juego() {
 		// Inicializa el objeto entorno
-		this.entorno = new Entorno(this, "Princesa Saltarina - Grupo 9 - Monsegur - Moragues - Escalante - V0.50", 800,
-				600);
+		this.entorno = new Entorno(this, "Princesa Saltarina - Grupo 9 - Monsegur - Moragues - Escalante - V0.50", 800,600);
 		// Inicializar lo que haga falta para el juego
 		// ...
+		this.imag = Herramientas.cargarImagen("fondonegro.png");
 		this.fondo = new Fondo(entorno.ancho() / 2, entorno.alto() / 2);
 		this.pisos = new Ladrillo[5][]; // Crear 5 pisos en total
 		Random rand = new Random();
@@ -65,10 +68,20 @@ public class Juego extends InterfaceJuego {
 
 		this.princesa = new Princesa(entorno.ancho() / 2, entorno.alto() - 70);
 		this.balas = null;
-//        this.trex = new Trex(entorno.ancho() - 20, entorno.alto() - 70); //UN SOLO REX
 		this.hueso = null;
 
-//		METODO 2 MUCHOS REXs
+
+
+//        APARECER MUCHOS REXS METODO 1
+		Random random = new Random();
+		this.trexs = new Trex[4][2]; // Crear 2 rexs por piso
+		for (int i = 0; i < trexs.length; i++) {
+			for (int j = 0; j < trexs[i].length; j++) {
+				trexs[i][j] = new Trex(random.nextInt(entorno.ancho()), entorno.alto() - (70 + i * 140));// Genera un número aleatorio entre 0 y el anch del entorno
+			}
+		}
+
+//		METODO 2 MUCHOS REXS
 //		this.trexs = new Trex[8]; // 2 trex por cada fila de 4
 //		Random random = new Random();
 //
@@ -81,22 +94,12 @@ public class Juego extends InterfaceJuego {
 //			trexs[i * 2] = new Trex(posicionx1 , posiciony);
 //			trexs[i * 2 + 1] = new Trex(posicionx2, posiciony);
 //		}
-
-//		this.huesos = new Hueso[8];
-
-//        APARECER MUCHOS REXS METODO 1
-		Random random = new Random();
-		this.trexs = new Trex[4][2]; // Crear 2 rexs por piso
-		for (int i = 0; i < trexs.length; i++) {
-			for (int j = 0; j < trexs[i].length; j++) {
-				trexs[i][j] = new Trex(random.nextInt(entorno.ancho()), entorno.alto() - (70 + i * 140));// Genera un número aleatorio entre 0 y el anch del entorno
-			}
-		}
-
+		
 		// Inicia el juego!
 		this.entorno.iniciar();
 	}
 
+	
 	/**
 	 * Durante el juego, el método tick() será ejecutado en cada instante y por lo
 	 * tanto es el método más importante de esta clase. Aquí se debe actualizar el
@@ -224,6 +227,21 @@ public class Juego extends InterfaceJuego {
 				}
 			}
 		}
+		
+		 if (this.princesa == null) {
+			// Marcar que el juego ha terminado
+			 	entorno.dibujarImagen(imag, entorno.ancho()/2, entorno.alto()/2, 0, 1);
+		        entorno.cambiarFont("Arial", 40, java.awt.Color.white);
+		        entorno.escribirTexto("JUEGO TERMINADO", entorno.ancho() / 2 -180, entorno.alto() / 2);
+		        entorno.escribirTexto("Presiona [r] para volver a jugar", entorno.ancho() / 2 - 250, entorno.alto() / 2 + 50);
+		        // Detectar si se presiona la tecla 'r' para reiniciar el juego
+		        if(entorno.sePresiono('r')) {
+		        		Juego game = new Juego();
+		        	}
+		        }
+		
+		    	
+		
 	}
 
 	@SuppressWarnings("unused")

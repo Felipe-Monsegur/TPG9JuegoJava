@@ -24,14 +24,7 @@ public class Fondo {
 		}
 		
 		public void dibujar(Entorno e) {
-//			e.dibujarRectangulo(x, y, ancho, alto, 0, color);
-			
-//			e.dibujarImagen(imag, e.ancho()/2 ,  e.alto()/2, 0);
 			e.dibujarImagen(imag, e.ancho()/2, e.alto()/2, 0, 1);
 			
 		}
-//		public void dibujear(Entorno entorno) {
-//			entorno.dibujarRectangulo(x,y,ancho,alto,0,color);
-//			
-//		}
 	}
