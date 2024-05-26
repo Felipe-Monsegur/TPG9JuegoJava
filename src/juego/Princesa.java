@@ -57,24 +57,34 @@ public class Princesa {
 	public void dibujar(Entorno e) {
 //		e.dibujarRectangulo(x, y, ancho, alto, 0, color);
 		e.dibujarImagen(imag, x, y-7, 0, 0.13);
-		if (direccion==1) {
-			this.imag = Herramientas.cargarImagen("princesa.png");
-		}else {
-			this.imag = Herramientas.cargarImagen("princesaIzq.png");
-		}
+//		if (direccion==1) {
+//			this.imag = Herramientas.cargarImagen("princesa.png");
+//		}else {
+//			this.imag = Herramientas.cargarImagen("princesaIzq.png");
+//		}
 	}
 	
+	
+	 public void cambiarImagen() {// Cambia la imagen cuadno la golpean
+		 if (direccion==1) {
+				this.imag = Herramientas.cargarImagen("princesa golpe.png");
+			}else {
+				this.imag = Herramientas.cargarImagen("princesaIzq golpe.png");
+			}
+	    }
 	
 	public void moverDerecha(Entorno e) {
 		if(this.x+this.ancho/2<e.ancho())
 			this.x+=4;
 			this.direccion=1;
+			this.imag = Herramientas.cargarImagen("princesa.png");
 	}
 	
 	public void moverIzquierda() {
 		if(this.x-this.ancho/2-3>=0) {
 			this.x-=4;
 			this.direccion=-1;
+			this.imag = Herramientas.cargarImagen("princesaIzq.png");
 		}
 	}
 	

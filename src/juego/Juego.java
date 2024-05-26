@@ -24,13 +24,14 @@ public class Juego extends InterfaceJuego {
 	private Image imag;
 	private int trexsEliminados;
 	private int puntos;
+	private int vidas;
 
 	public Juego() {
 		// Inicializa el objeto entorno
 		this.entorno = new Entorno(this, "Princesa Saltarina - Grupo 9 - Monsegur - Moragues - Escalante - V0.50", 800,600);
 		// Inicializar lo que haga falta para el juego
 		// ...
-		this.imag = Herramientas.cargarImagen("fondonegro.png");
+		
 		this.fondo = new Fondo(entorno.ancho() / 2, entorno.alto() / 2);
 		this.pisos = new Ladrillo[5][]; // Crear 5 pisos en total
 		Random rand = new Random();
@@ -70,6 +71,7 @@ public class Juego extends InterfaceJuego {
 
 		this.puntos= 0;
 		this.trexsEliminados= 0;
+		this.vidas= 10;
 		this.princesa = new Princesa(entorno.ancho() / 2, entorno.alto() - 70);
 		this.balas = null;
 		this.hueso = null;
@@ -124,9 +126,14 @@ public class Juego extends InterfaceJuego {
 				}
 			}
 		}
-		entorno.cambiarFont("Minecraft", 23, java.awt.Color.black);
+		entorno.cambiarFont("Calibri", 23, java.awt.Color.black);
 		 entorno.escribirTexto("TREXS ELIMINADOS:"+this.trexsEliminados, 0, entorno.alto()-24);
 	     entorno.escribirTexto("PUNTOS:"+this.puntos, 0, entorno.alto()-1);
+	     for(int i=0; i<vidas;i++) {
+	    	 this.imag = Herramientas.cargarImagen("heart.png");
+	    	 entorno.dibujarImagen(imag, entorno.ancho()-30-(i*40), entorno.alto()-23, 0, 4);
+	     }
+//	     entorno.escribirTexto("VIDAS:"+this.vidas, 0, 20); //VIDAS EN TEXTO
 
 //        APARECER MUCHOS REXS METODO 1
 		for (int i = 0; i < trexs.length; i++) {
@@ -151,13 +158,20 @@ public class Juego extends InterfaceJuego {
 						// Verificar colisión entre princesa y huesos
 						if (this.princesa != null && hueso.colisionConPrincesa(this.princesa)) {
 							trexs[i][j].setHueso(null); // Eliminar hueso si colisiona con la bala
-							this.princesa = null;
+							this.vidas -= 1;
+							this.princesa.cambiarImagen();
 						}
 
 					}
 
 				}
 			}
+		}
+		
+		
+		
+		if (this.vidas ==0) {
+			this.princesa =null;
 		}
 
 //	      METODO 1
@@ -207,6 +221,7 @@ public class Juego extends InterfaceJuego {
 
 			// Actualizar posición y estado de la princesa
 			princesa.mover(pisos); // Colisionar con todos los pisos
+			
 			princesa.dibujar(entorno);
 
 			// Dibujar y mover balas si están activas
@@ -231,7 +246,7 @@ public class Juego extends InterfaceJuego {
 					}
 
 				}
-
+				
 				if (this.balas != null && (this.balas.getX() > entorno.ancho() || this.balas.getX() < 0)) {
 					this.balas = null;
 				}
@@ -240,6 +255,7 @@ public class Juego extends InterfaceJuego {
 		
 		 if (this.princesa == null ) {
 			// Marcar que el juego ha terminado
+			 	this.imag = Herramientas.cargarImagen("fondonegro.png");
 			 	entorno.dibujarImagen(imag, entorno.ancho()/2, entorno.alto()/2, 0, 1);
 		        entorno.cambiarFont("Arial", 40, java.awt.Color.white);
 		        entorno.escribirTexto("JUEGO TERMINADO", entorno.ancho() / 2 -180, entorno.alto() / 2);

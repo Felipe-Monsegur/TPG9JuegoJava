@@ -76,7 +76,7 @@ public class Hueso {
 	           this.x + this.diametro / 2 > princesa.getX() - princesa.getAncho() / 2 &&
 	           this.x - this.diametro / 2 < princesa.getX() + princesa.getAncho() / 2 &&
 	           this.y + this.diametro / 2 > princesa.getY() - princesa.getAlto() / 2 &&
-	           this.y - this.diametro / 2 < princesa.getY() + princesa.getAlto() / 2;
+	           this.y - this.diametro / 2 < princesa.getY() + princesa.getAlto() / 2;         
 	}
 	
 	public double getX() {
