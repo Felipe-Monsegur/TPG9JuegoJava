@@ -28,7 +28,7 @@ public class Juego extends InterfaceJuego {
 
 	public Juego() {
 		// Inicializa el objeto entorno
-		this.entorno = new Entorno(this, "Princesa Saltarina - Grupo 9 - Monsegur - Moragues - Escalante - V0.50", 1500,600);
+		this.entorno = new Entorno(this, "Princesa Saltarina - Grupo 9 - Monsegur - Moragues - Escalante - V0.50", 800,600);
 		// Inicializar lo que haga falta para el juego
 		// ...
 		
@@ -260,6 +260,8 @@ public class Juego extends InterfaceJuego {
 		        entorno.cambiarFont("Calibri", 50, java.awt.Color.red);
 		        entorno.escribirTexto("PERDISTE", entorno.ancho() / 2 -110, entorno.alto() / 2-50);
 		        entorno.cambiarFont("Calibri", 40, java.awt.Color.white);
+		        entorno.escribirTexto("TREXS ELIMINADOS:"+this.trexsEliminados, entorno.ancho() / 2 - 250, entorno.alto() / 2 + 100);
+			    entorno.escribirTexto("PUNTOS:"+this.puntos, entorno.ancho() / 2 - 250, entorno.alto() / 2 + 140);
 		        entorno.escribirTexto("JUEGO TERMINADO", entorno.ancho() / 2 -180, entorno.alto() / 2);
 		        entorno.escribirTexto("Presiona [r] para volver a jugar", entorno.ancho() / 2 - 250, entorno.alto() / 2 + 50);  
 		        // Detectar si se presiona la tecla 'r' para reiniciar el juego
@@ -272,6 +274,8 @@ public class Juego extends InterfaceJuego {
 		        entorno.cambiarFont("Calibri", 50, java.awt.Color.green);
 		        entorno.escribirTexto("GANASTE", entorno.ancho() / 2 -110, entorno.alto() / 2-50);
 		        entorno.cambiarFont("Calibri", 40, java.awt.Color.white);
+		        entorno.escribirTexto("TREXS ELIMINADOS:"+this.trexsEliminados, entorno.ancho() / 2 - 250, entorno.alto() / 2 + 100);
+			    entorno.escribirTexto("PUNTOS:"+this.puntos, entorno.ancho() / 2 - 250, entorno.alto() / 2 + 140);
 		        entorno.escribirTexto("JUEGO TERMINADO", entorno.ancho() / 2 - 180, entorno.alto() / 2);
 		        entorno.escribirTexto("Presiona [r] para volver a jugar", entorno.ancho() / 2 - 250, entorno.alto() / 2 + 50);
 		        // Detectar si se presiona la tecla 'r' para reiniciar el juego
