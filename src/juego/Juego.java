@@ -42,7 +42,7 @@ public class Juego extends InterfaceJuego {
 	
 		//reinicia el juego y vuelve a dibujar los pisos de manera diferente los trexs y la princesa, se reinicia el contador tmb
 		public void reiniciar() {
-		inmunidad=true;
+		inmunidad=true;	//princesa inmune al daño hasta que se mueva
 		Random rand = new Random();
 		// Crear los ladrillos para cada piso
 		for (int i = 0; i < pisos.length; i++) {
@@ -78,7 +78,7 @@ public class Juego extends InterfaceJuego {
 			}
 		}
 
-		this.puntos = 0;
+		this.puntos = 0;	// cada trexs eliminado te da 2 puntos
 		this.trexsEliminados = 0;
 		this.trexsEnPantalla =0;
 		this.vidas = 3;
@@ -209,25 +209,28 @@ public class Juego extends InterfaceJuego {
 		    this.trexsEnPantalla++;
 		}
 		
+		//princesa muere si pierde las vidas
 		if (this.vidas == 0) {
 			this.princesa = null;
 		}
 
+		
+		//dibuja y mueve a la princesa
 		if (this.princesa != null) {
 			princesa.dibujar(entorno);
 
 			// Manejar entradas del jugador
 			if (entorno.estaPresionada('d') || entorno.estaPresionada(entorno.TECLA_DERECHA)) {
 				princesa.moverDerecha(entorno);
-				inmunidad=false;
+				inmunidad=false;//princesa pierde la inmunidad al daño porque se movio
 			}
 			if (entorno.estaPresionada('a') || entorno.estaPresionada(entorno.TECLA_IZQUIERDA)) {
 				princesa.moverIzquierda();
-				inmunidad=false;
+				inmunidad=false;//princesa pierde la inmunidad al daño porque se movio
 			}
 			if (entorno.estaPresionada('w') || entorno.estaPresionada('x')) {
 				princesa.saltar();
-				inmunidad=false;
+				inmunidad=false;//princesa pierde la inmunidad al daño porque se movio
 			}
 
 			// Actualizar posición y estado de la princesa
@@ -270,28 +273,25 @@ public class Juego extends InterfaceJuego {
 			entorno.cambiarFont("Calibri", 50, java.awt.Color.red);
 			entorno.escribirTexto("PERDISTE", entorno.ancho() / 2 - 110, entorno.alto() / 2 - 50);
 			entorno.cambiarFont("Calibri", 40, java.awt.Color.white);
-			entorno.escribirTexto("TREXS ELIMINADOS:" + this.trexsEliminados, entorno.ancho() / 2 - 250,
-					entorno.alto() / 2 + 100);
+			entorno.escribirTexto("TREXS ELIMINADOS:" + this.trexsEliminados, entorno.ancho() / 2 - 250,entorno.alto() / 2 + 100);
 			entorno.escribirTexto("PUNTOS:" + this.puntos, entorno.ancho() / 2 - 250, entorno.alto() / 2 + 140);
 			entorno.escribirTexto("JUEGO TERMINADO", entorno.ancho() / 2 - 180, entorno.alto() / 2);
-			entorno.escribirTexto("Presiona [r] para volver a jugar", entorno.ancho() / 2 - 250,
-					entorno.alto() / 2 + 50);
+			entorno.escribirTexto("Presiona [r] para volver a jugar", entorno.ancho() / 2 - 250,entorno.alto() / 2 + 50);
 			// Detectar si se presiona la tecla 'r' para reiniciar el juego
 		}
 		if (this.princesa != null && princesa.getY() < 0) {
 			// Marcar que ganaste el juego
 			princesa.setY(-10000);
+			
 			this.imag = Herramientas.cargarImagen("fondonegro.png");
 			entorno.dibujarImagen(imag, entorno.ancho() / 2, entorno.alto() / 2, 0, 1);
 			entorno.cambiarFont("Calibri", 50, java.awt.Color.green);
 			entorno.escribirTexto("GANASTE", entorno.ancho() / 2 - 110, entorno.alto() / 2 - 50);
 			entorno.cambiarFont("Calibri", 40, java.awt.Color.white);
-			entorno.escribirTexto("TREXS ELIMINADOS:" + this.trexsEliminados, entorno.ancho() / 2 - 250,
-					entorno.alto() / 2 + 100);
+			entorno.escribirTexto("TREXS ELIMINADOS:" + this.trexsEliminados, entorno.ancho() / 2 - 250,entorno.alto() / 2 + 100);
 			entorno.escribirTexto("PUNTOS:" + this.puntos, entorno.ancho() / 2 - 250, entorno.alto() / 2 + 140);
 			entorno.escribirTexto("JUEGO TERMINADO", entorno.ancho() / 2 - 180, entorno.alto() / 2);
-			entorno.escribirTexto("Presiona [r] para volver a jugar", entorno.ancho() / 2 - 250,
-					entorno.alto() / 2 + 50);
+			entorno.escribirTexto("Presiona [r] para volver a jugar", entorno.ancho() / 2 - 250,entorno.alto() / 2 + 50);
 			// Detectar si se presiona la tecla 'r' para reiniciar el juego
 		}
 		

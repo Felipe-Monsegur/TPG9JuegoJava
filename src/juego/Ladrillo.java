@@ -1,6 +1,5 @@
 package juego;
 
-import java.awt.Color;
 import java.awt.Image;
 import java.util.Random;
 
@@ -12,7 +11,6 @@ public class Ladrillo {
 	private double y;
 	private double ancho;
 	private double alto;
-	private Color color;
 	private Image imag;
 	private double angulo;
 	private boolean destructible;
@@ -23,7 +21,6 @@ public class Ladrillo {
 		this.y = y;
 		this.ancho = 50;
 		this.alto = 50;
-		this.color = Color.ORANGE;
 		this.imag = Herramientas.cargarImagen("ladrillo.png");
 		this.imagM = Herramientas.cargarImagen("metal.png");
 		// metal o ladrillo
@@ -48,10 +45,8 @@ public class Ladrillo {
 
 	public void dibujar(Entorno e) {
 		if (!destructible) {
-			e.dibujarRectangulo(this.x, this.y, this.ancho, this.alto, 0, this.color);
 			e.dibujarImagen(imagM, x, y, 0, 1);
 		} else if (destructible) {
-			e.dibujarRectangulo(this.x, this.y, this.ancho, this.alto, 0, this.color);
 			e.dibujarImagen(imag, x, y, 0, 1);
 		}
 	}

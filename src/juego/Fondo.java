@@ -5,7 +5,6 @@ import entorno.Entorno;
 import entorno.Herramientas;
 
 public class Fondo {
-
 	private Image imag;
 
 	public Fondo(double x, double y) {
