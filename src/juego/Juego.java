@@ -16,6 +16,7 @@ public class Juego extends InterfaceJuego {
 	private Princesa princesa;
 	private Bala balas;
 	private Trex[][] trexs; // aparecer muchos rexs metodo 1
+	private int trexsEnPantalla;
 	private Image imag;
 	private int trexsEliminados;
 	private int puntos;
@@ -67,6 +68,7 @@ public class Juego extends InterfaceJuego {
 
 		this.puntos = 0;
 		this.trexsEliminados = 0;
+		this.trexsEnPantalla =0;
 		this.vidas = 3;
 		this.princesa = new Princesa(entorno.ancho() / 2, entorno.alto() - 70);
 		this.balas = null;
@@ -76,13 +78,8 @@ public class Juego extends InterfaceJuego {
 		this.trexs = new Trex[4][2]; // Crear 2 rexs por piso
 		for (int i = 0; i < trexs.length; i++) {
 			for (int j = 0; j < trexs[i].length; j++) {
-				trexs[i][j] = new Trex(random.nextInt(entorno.ancho()), entorno.alto() - (70 + i * 140));// Genera un
-																											// número
-																											// aleatorio
-																											// entre 0 y
-																											// el anch
-																											// del
-																											// entorno
+				trexs[i][j] = new Trex(random.nextInt(entorno.ancho()), entorno.alto() - (70 + i * 140));// Genera un numero aleatorio para aparecer el trexs	
+				this.trexsEnPantalla +=1;
 			}
 		}
 
@@ -109,6 +106,8 @@ public class Juego extends InterfaceJuego {
 				}
 			}
 		}
+		
+		//mostrar puntos
 		entorno.cambiarFont("Calibri", 23, java.awt.Color.black);
 		entorno.escribirTexto("TREXS ELIMINADOS:" + this.trexsEliminados, 0, entorno.alto() - 24);
 		entorno.escribirTexto("PUNTOS:" + this.puntos, 0, entorno.alto() - 1);
@@ -117,14 +116,17 @@ public class Juego extends InterfaceJuego {
 			entorno.dibujarImagen(imag, entorno.ancho() - 30 - (i * 40), entorno.alto() - 23, 0, 4);
 		}
 
-//        APARECER MUCHOS REXS METODO 1
+		//Aparecer muchos trexs
 		for (int i = 0; i < trexs.length; i++) {
 			for (int j = 0; j < trexs[i].length; j++) {
 				if (trexs[i][j] != null) {
 					trexs[i][j].dibujar(entorno);
-					trexs[i][j].mover(pisos, entorno);
+					trexs[i][j].mover(pisos, entorno, trexs);
+					  if (this.princesa != null && trexs[i][j].colisionConPrincesa(princesa)) { //trex le saca una vida a la princesa si colisionan			             
+			                vidas=0;
+					  }
 
-					// CADA REX DISPARA UN HUESO SI PUEDE
+					// Cada rex dispara un hueso si puede
 					trexs[i][j].dispararHueso();
 					Hueso hueso = trexs[i][j].getHueso();
 					if (hueso != null) {
@@ -139,7 +141,7 @@ public class Juego extends InterfaceJuego {
 						}
 						// Verificar colisión entre princesa y huesos
 						if (this.princesa != null && hueso.colisionConPrincesa(this.princesa)) {
-							trexs[i][j].setHueso(null); // Eliminar hueso si colisiona con la bala
+							trexs[i][j].setHueso(null); // Eliminar hueso si colisiona con princesa
 							this.vidas -= 1;
 							this.princesa.cambiarImagen();
 						}
@@ -149,7 +151,24 @@ public class Juego extends InterfaceJuego {
 				}
 			}
 		}
-
+		
+		
+		
+		//aparece 1 trexs mas si solo hay 2 trexs en pantalla
+		if (this.trexsEnPantalla == 2) {
+		    Random random = new Random();
+		    int nuevoI = random.nextInt(4); // Obtener un índice aleatorio para la fila
+		    int nuevoJ = random.nextInt(1); // Obtener un índice aleatorio para la columna
+		    // Verificar que la posición no este ocupada por un trex existente
+		    while (trexs[nuevoI][nuevoJ] != null) {
+		        nuevoI = random.nextInt(4);
+		        nuevoJ = random.nextInt(trexs[nuevoI].length);
+		    }
+		    // Agregar un nuevo Trex en la posición aleatoria
+		    trexs[nuevoI][nuevoJ] = new Trex(random.nextInt(entorno.ancho()), entorno.alto() - (70 + nuevoI * 140));
+		    this.trexsEnPantalla++;
+		}
+		
 		if (this.vidas == 0) {
 			this.princesa = null;
 		}
@@ -191,7 +210,8 @@ public class Juego extends InterfaceJuego {
 						if (trexs[i][j] != null && trexs[i][j].colisionConBala(this.balas)) {
 							trexs[i][j] = null; // convierte en null al trex y a las balas
 							this.balas = null;
-							this.trexsEliminados++; // Incrementar contador de trexs eliminados
+							this.trexsEnPantalla-=1;
+							this.trexsEliminados+=1; // Incrementar contador de trexs eliminados
 							this.puntos += 2;
 						}
 					}
