@@ -21,6 +21,8 @@ public class Juego extends InterfaceJuego {
 	private int trexsEliminados;
 	private int puntos;
 	private int vidas;
+	private boolean inmunidad; //para que no muera recien empezar el juego y sea inmune al daño hasta que se mueva
+	private boolean estadoInicio;
 
 	public Juego() {
 		// Inicializa el objeto entorno
@@ -31,6 +33,16 @@ public class Juego extends InterfaceJuego {
 
 		this.fondo = new Fondo(entorno.ancho() / 2, entorno.alto() / 2);
 		this.pisos = new Ladrillo[5][]; // Crear 5 pisos en total
+		this.estadoInicio = true; // Comienza en la pantalla de inicio
+		reiniciar();
+		
+		// Inicia el juego!
+		this.entorno.iniciar();
+		}
+	
+		//reinicia el juego y vuelve a dibujar los pisos de manera diferente los trexs y la princesa, se reinicia el contador tmb
+		public void reiniciar() {
+		inmunidad=true;
 		Random rand = new Random();
 		// Crear los ladrillos para cada piso
 		for (int i = 0; i < pisos.length; i++) {
@@ -83,8 +95,6 @@ public class Juego extends InterfaceJuego {
 			}
 		}
 
-		// Inicia el juego!
-		this.entorno.iniciar();
 	}
 
 	/**
@@ -96,8 +106,38 @@ public class Juego extends InterfaceJuego {
 	public void tick() {
 		// Procesamiento de un instante de tiempo
 		// ...
-		fondo.dibujar(entorno);
+		
+		//antes de empezar el juego
+		if (estadoInicio) {
+			// Mostrar pantalla de inicio con instrucciones
+			entorno.cambiarFont("Calibri", 40, java.awt.Color.magenta);
+			entorno.escribirTexto("Bienvenido a Princesa Saltarina", entorno.ancho() / 2 - 250, entorno.alto() / 2 - 150);
+			entorno.cambiarFont("Calibri", 30, java.awt.Color.white);
+			entorno.escribirTexto("[←] Mover a la izquierda", entorno.ancho()/2 - 200, entorno.alto() / 2 - 70);
+			entorno.escribirTexto("[→] Mover a la derecha", entorno.ancho()/2 - 200, entorno.alto() / 2 - 40);
+			entorno.escribirTexto("Instrucciones:", entorno.ancho()/2 - 200, entorno.alto()/2 - 100);
+			entorno.escribirTexto("[C] Dispara", entorno.ancho()/2 - 200, entorno.alto()/2 - 10);
+			entorno.escribirTexto("[X] Salta", entorno.ancho()/2 - 200, entorno.alto()/2 + 20);
+			entorno.escribirTexto("Reglas del Juego:", entorno.ancho()/2 - 200, entorno.alto()/2 + 60);
+			entorno.escribirTexto("Tenes 3 vidas.", entorno.ancho()/2 - 200, entorno.alto()/2 + 90);
+			entorno.escribirTexto("Si un hueso te toca, pierdes una vida.", entorno.ancho()/2 - 200, entorno.alto()/2 + 120);
+			entorno.escribirTexto("Si un Trex te toca, pierdes todas las vidas.", entorno.ancho()/2 - 200, entorno.alto()/2 + 150);
+			entorno.escribirTexto("Presiona [Enter] para comenzar", entorno.ancho()/2 - 180, entorno.alto()/2 + 200);
 
+			if (entorno.sePresiono(entorno.TECLA_ENTER)) {
+				estadoInicio = false; // Iniciar el juego cuando se presiona Enter
+				reiniciar();
+			}
+			return; // Salir del método tick para no ejecutar el resto del juego hasta que se presione Enter
+		}
+		
+		
+		
+		//empieza el juego
+		fondo.dibujar(entorno);
+		
+		
+		
 		// dibuja cada Ladrillo
 		for (Ladrillo[] piso : pisos) {
 			for (Ladrillo ladrillo : piso) {
@@ -122,7 +162,7 @@ public class Juego extends InterfaceJuego {
 				if (trexs[i][j] != null) {
 					trexs[i][j].dibujar(entorno);
 					trexs[i][j].mover(pisos, entorno, trexs);
-					  if (this.princesa != null && trexs[i][j].colisionConPrincesa(princesa)) { //trex le saca una vida a la princesa si colisionan			             
+					  if (this.princesa != null && !inmunidad && trexs[i][j].colisionConPrincesa(princesa)) { //trex le saca una vida a la princesa si colisionan			             
 			                vidas=0;
 					  }
 
@@ -140,7 +180,7 @@ public class Juego extends InterfaceJuego {
 							trexs[i][j].setHueso(null); // Eliminar hueso si colisiona con la bala
 						}
 						// Verificar colisión entre princesa y huesos
-						if (this.princesa != null && hueso.colisionConPrincesa(this.princesa)) {
+						if (this.princesa != null && !inmunidad && hueso.colisionConPrincesa(this.princesa)) {
 							trexs[i][j].setHueso(null); // Eliminar hueso si colisiona con princesa
 							this.vidas -= 1;
 							this.princesa.cambiarImagen();
@@ -176,26 +216,25 @@ public class Juego extends InterfaceJuego {
 		if (this.princesa != null) {
 			princesa.dibujar(entorno);
 
-			// Manejar entrada del jugador
-			if (entorno.estaPresionada('d')) {
+			// Manejar entradas del jugador
+			if (entorno.estaPresionada('d') || entorno.estaPresionada(entorno.TECLA_DERECHA)) {
 				princesa.moverDerecha(entorno);
+				inmunidad=false;
 			}
-
-			if (entorno.estaPresionada('a')) {
+			if (entorno.estaPresionada('a') || entorno.estaPresionada(entorno.TECLA_IZQUIERDA)) {
 				princesa.moverIzquierda();
+				inmunidad=false;
 			}
-
-			if (entorno.estaPresionada('w')) {
+			if (entorno.estaPresionada('w') || entorno.estaPresionada('x')) {
 				princesa.saltar();
+				inmunidad=false;
 			}
 
 			// Actualizar posición y estado de la princesa
 			princesa.mover(pisos); // Colisionar con todos los pisos
 
-			princesa.dibujar(entorno);
-
 			// Dibujar y mover balas si están activas
-			if (entorno.sePresiono(entorno.TECLA_ESPACIO) && this.balas == null) {
+			if (entorno.sePresiono(entorno.TECLA_ESPACIO) || entorno.sePresiono('c') && this.balas == null) {
 				this.balas = princesa.disparar();
 			}
 
@@ -204,7 +243,7 @@ public class Juego extends InterfaceJuego {
 				this.balas.dibujar(entorno);
 				this.balas.mover();
 
-				// detecta colision de la bala con los trex!!!!
+				// detecta colision de la bala con los trex
 				for (int i = 0; i < trexs.length; i++) {
 					for (int j = 0; j < trexs[i].length; j++) {
 						if (trexs[i][j] != null && trexs[i][j].colisionConBala(this.balas)) {
@@ -217,7 +256,7 @@ public class Juego extends InterfaceJuego {
 					}
 
 				}
-
+				//bala desaparece si choca con lso bordes
 				if (this.balas != null && (this.balas.getX() > entorno.ancho() || this.balas.getX() < 0)) {
 					this.balas = null;
 				}
@@ -225,7 +264,7 @@ public class Juego extends InterfaceJuego {
 		}
 
 		if (this.princesa == null) {
-			// Juego que perdiste el juego
+			// Marcar que perdiste el juego
 			this.imag = Herramientas.cargarImagen("fondonegro.png");
 			entorno.dibujarImagen(imag, entorno.ancho() / 2, entorno.alto() / 2, 0, 1);
 			entorno.cambiarFont("Calibri", 50, java.awt.Color.red);
@@ -255,8 +294,11 @@ public class Juego extends InterfaceJuego {
 					entorno.alto() / 2 + 50);
 			// Detectar si se presiona la tecla 'r' para reiniciar el juego
 		}
+		
+		
+		//boton de reiniciar para cualquier momento del juego
 		if (entorno.sePresiono('r')) {
-			Juego game = new Juego();
+			reiniciar();
 		}
 	}
 
