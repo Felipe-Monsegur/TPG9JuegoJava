@@ -18,7 +18,7 @@ public class Hueso {
 		this.y = y;
 		this.diametro = 25;
 		this.velocidad = 2;
-		this.imag = Herramientas.cargarImagen("hueso.png");
+		this.imag = Herramientas.cargarImagen("styles/hueso.png");
 		this.direccion = direccion;
 	}
 

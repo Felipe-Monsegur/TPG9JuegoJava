@@ -32,7 +32,7 @@ public class Princesa {
 		this.velocidadY = 0;
 		this.gravedad = 0.5;
 		this.enelaire = false;
-		this.imag = Herramientas.cargarImagen("princesa.png");
+		this.imag = Herramientas.cargarImagen("styles/princesa.png");
 
 	}
 
@@ -48,9 +48,9 @@ public class Princesa {
 
 	public void cambiarImagen() {// Cambia la imagen cuadno la golpean
 		if (direccion == 1) {
-			this.imag = Herramientas.cargarImagen("princesa golpe.png");
+			this.imag = Herramientas.cargarImagen("styles/princesa golpe.png");
 		} else {
-			this.imag = Herramientas.cargarImagen("princesaIzq golpe.png");
+			this.imag = Herramientas.cargarImagen("styles/princesaIzq golpe.png");
 		}
 	}
 
@@ -58,14 +58,14 @@ public class Princesa {
 		if (this.x + this.ancho / 2 < e.ancho())
 			this.x += 4;
 		this.direccion = 1;
-		this.imag = Herramientas.cargarImagen("princesa.png");
+		this.imag = Herramientas.cargarImagen("styles/princesa.png");
 	}
 
 	public void moverIzquierda() {
 		if (this.x - this.ancho / 2 - 3 >= 0) {
 			this.x -= 4;
 			this.direccion = -1;
-			this.imag = Herramientas.cargarImagen("princesaIzq.png");
+			this.imag = Herramientas.cargarImagen("styles/princesaIzq.png");
 		}
 	}
 

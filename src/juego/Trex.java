@@ -28,16 +28,16 @@ public class Trex {
 		this.velocidadY = 0;
 		this.gravedad = 0.5;
 		this.random = new Random();
-		this.imag = Herramientas.cargarImagen("trex.png");
+		this.imag = Herramientas.cargarImagen("styles/trex.png");
 
 	}
 
 	public void dibujar(Entorno e) {
 		e.dibujarImagen(imag, x, y - 7, 0, 0.1);
 		if (direccion == 1) {
-			this.imag = Herramientas.cargarImagen("trex.png");
+			this.imag = Herramientas.cargarImagen("styles/trex.png");
 		} else {
-			this.imag = Herramientas.cargarImagen("trexIzq.png");
+			this.imag = Herramientas.cargarImagen("styles/trexIzq.png");
 		}
 	}
 

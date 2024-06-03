@@ -19,7 +19,7 @@ public class Bala {
 		this.y = y;
 		this.diametro = 25;
 		this.velocidad = 5;
-		this.imag = Herramientas.cargarImagen("bolaFuego.png");
+		this.imag = Herramientas.cargarImagen("styles/bolaFuego.png");
 		this.direccion = direccion;
 	}
 
