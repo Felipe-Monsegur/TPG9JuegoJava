@@ -27,7 +27,7 @@ public class Juego extends InterfaceJuego {
 
 	public Juego() {
 		// Inicializa el objeto entorno
-		this.entorno = new Entorno(this, "Super Elizabeth Sis, Volcano Edition - Grupo 9 - Monsegur - Moragues - Escalante - V1.0.0", 800,600);
+		this.entorno = new Entorno(this, "Super Elizabeth Sis, Volcano Edition - Grupo 9 - Monsegur - Moragues - V1.0.0", 800,600);
 		// Inicializar lo que haga falta para el juego
 		// ...
 
