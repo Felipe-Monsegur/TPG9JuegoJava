@@ -27,7 +27,7 @@ public class Juego extends InterfaceJuego {
 
 	public Juego() {
 		// Inicializa el objeto entorno
-		this.entorno = new Entorno(this, "Super Elizabeth Sis, Volcano Edition - Grupo 9 - Monsegur - Moragues  - V1.0.0", 800,600);
+		this.entorno = new Entorno(this, "Super Elizabeth Sis, Volcano Edition - Grupo 9 - Monsegur - Moragues - Escalante - V1.0.0", 800,600);
 		// Inicializar lo que haga falta para el juego
 		// ...
 
@@ -77,7 +77,7 @@ public class Juego extends InterfaceJuego {
 						tipoBloque);
 			}
 		}
-		this.lava = new Lava(entorno.ancho()/2, entorno.alto()+300, entorno);
+		this.lava = new Lava(entorno.ancho()/2, entorno.alto()+350, entorno);
 		this.puntos = 0;	// cada trexs eliminado te da 2 puntos
 		this.trexsEliminados = 0;
 		this.trexsEnPantalla =0;
@@ -149,7 +149,7 @@ public class Juego extends InterfaceJuego {
 			}
 		}
 		
-		//mostrar puntos
+		//mostrar puntos y vidas
 		entorno.cambiarFont("Calibri", 23, java.awt.Color.black);
 		entorno.escribirTexto("TREXS ELIMINADOS:" + this.trexsEliminados, 0, entorno.alto() - 24);
 		entorno.escribirTexto("PUNTOS:" + this.puntos, 0, entorno.alto() - 1);
@@ -284,6 +284,14 @@ public class Juego extends InterfaceJuego {
 			this.vidas=0;
 		}
 		
+		//mostrar puntos y vidas
+				entorno.cambiarFont("Calibri", 23, java.awt.Color.black);
+				entorno.escribirTexto("TREXS ELIMINADOS:" + this.trexsEliminados, 0, entorno.alto() - 24);
+				entorno.escribirTexto("PUNTOS:" + this.puntos, 0, entorno.alto() - 1);
+				for (int i = 0; i < vidas; i++) {
+					this.imag = Herramientas.cargarImagen("styles/heart.png");
+					entorno.dibujarImagen(imag, entorno.ancho() - 30 - (i * 40), entorno.alto() - 23, 0, 4);
+				}
 		
 		if (this.princesa == null) {
 			// Marcar que perdiste el juego

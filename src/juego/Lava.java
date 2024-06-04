@@ -18,7 +18,7 @@ public class Lava {
 	        this.y = y;
 	        this.ancho = e.ancho();
 	        this.alto = e.alto();
-	        this.velocidad = 0.2; // Velocidad de ascenso del magma
+	        this.velocidad = 0.4; // Velocidad de ascenso del magma
 	        this.imag = Herramientas.cargarImagen("styles/lava.png");
 	    }
 
