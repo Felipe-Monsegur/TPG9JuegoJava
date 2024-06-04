@@ -1,6 +1,7 @@
 package juego;
 
 import java.awt.Image;
+import java.util.ArrayList;
 import java.util.Random;
 
 import entorno.Entorno;
@@ -17,6 +18,7 @@ public class Juego extends InterfaceJuego {
 	private Princesa princesa;
 	private Bala balas;
 	private Trex[][] trexs; // aparecer muchos rexs metodo 1
+	 private ArrayList<Portal> portales;
 	private int trexsEnPantalla;
 	private Image imag;
 	private int trexsEliminados;
@@ -33,6 +35,7 @@ public class Juego extends InterfaceJuego {
 
 		this.fondo = new Fondo(entorno.ancho() / 2, entorno.alto() / 2);
 		this.pisos = new Ladrillo[5][]; // Crear 5 pisos en total
+		
 		this.estadoInicio = true; // Comienza en la pantalla de inicio
 		reiniciar();
 		
@@ -78,6 +81,8 @@ public class Juego extends InterfaceJuego {
 			}
 		}
 		this.lava = new Lava(entorno.ancho()/2, entorno.alto()+350, entorno);
+		this.portales = new ArrayList<>();
+		
 		this.puntos = 0;	// cada trexs eliminado te da 2 puntos
 		this.trexsEliminados = 0;
 		this.trexsEnPantalla =0;
@@ -199,18 +204,32 @@ public class Juego extends InterfaceJuego {
 		
 		//aparece 1 trexs mas si solo hay 2 trexs en pantalla
 		if (this.trexsEnPantalla == 2) {
-		    Random random = new Random();
-		    int nuevoI = random.nextInt(4); // Obtener un índice aleatorio para la fila
-		    int nuevoJ = random.nextInt(1); // Obtener un índice aleatorio para la columna
-		    // Verificar que la posición no este ocupada por un trex existente
-		    while (trexs[nuevoI][nuevoJ] != null) {
-		        nuevoI = random.nextInt(4);
-		        nuevoJ = random.nextInt(trexs[nuevoI].length);
-		    }
-		    // Agregar un nuevo Trex en la posición aleatoria
-		    trexs[nuevoI][nuevoJ] = new Trex(random.nextInt(entorno.ancho()), entorno.alto() - (70 + nuevoI * 140));
-		    this.trexsEnPantalla++;
-		}
+	        Random random = new Random();
+	        int nuevoI = random.nextInt(4); // Obtener un índice aleatorio para la fila
+	        int nuevoJ = random.nextInt(1); // Obtener un índice aleatorio para la columna
+	        while (trexs[nuevoI][nuevoJ] != null) {
+	            nuevoI = random.nextInt(4);
+	            nuevoJ = random.nextInt(trexs[nuevoI].length);
+	        }
+	        // Agregar un nuevo portal en la posición aleatoria
+	        double x = random.nextInt(entorno.ancho());
+	        double y = entorno.alto() - (70 + nuevoI * 140);
+	        portales.add(new Portal(x, y));
+	        this.trexsEnPantalla++;
+	    }
+
+	    // Dibujar portales y agregar Trex después de 2 segundos
+	    for (int i = 0; i < portales.size(); i++) {
+	        Portal portal = portales.get(i);
+	        portal.dibujar(entorno);
+	        if (portal.haPasadoTiempo()) {
+	            int nuevoI = (int) ((entorno.alto() - portal.getY() - 70) / 140);
+	            int nuevoJ = 0; // Solo hay una columna
+	            trexs[nuevoI][nuevoJ] = new Trex(portal.getX(), portal.getY());
+	            portales.remove(i);
+	            i--; // Ajustar el índice después de eliminar
+	        }
+	    }
 		
 		//princesa muere si pierde las vidas
 		if (this.vidas == 0) {
@@ -276,7 +295,7 @@ public class Juego extends InterfaceJuego {
 		
 		//subir la lava
 		if(this.princesa != null && !inmunidad) {
-			lava.subirLava();
+//			lava.subirLava();
 			lava.dibujar(entorno);
 		}
 		
