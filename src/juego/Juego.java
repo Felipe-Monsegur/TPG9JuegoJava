@@ -12,6 +12,7 @@ public class Juego extends InterfaceJuego {
 	// El objeto Entorno que controla el tiempo y otros
 	private Entorno entorno;
 	private Fondo fondo;
+	private Lava lava;
 	private Ladrillo[][] pisos;
 	private Princesa princesa;
 	private Bala balas;
@@ -26,7 +27,7 @@ public class Juego extends InterfaceJuego {
 
 	public Juego() {
 		// Inicializa el objeto entorno
-		this.entorno = new Entorno(this, "Super Elizabeth Sis, Volcano Edition - Grupo 9 - Monsegur - Moragues - Escalante - V1.0.0", 800,600);
+		this.entorno = new Entorno(this, "Super Elizabeth Sis, Volcano Edition - Grupo 9 - Monsegur - Moragues  - V1.0.0", 800,600);
 		// Inicializar lo que haga falta para el juego
 		// ...
 
@@ -76,7 +77,7 @@ public class Juego extends InterfaceJuego {
 						tipoBloque);
 			}
 		}
-
+		this.lava = new Lava(entorno.ancho()/2, entorno.alto()+300, entorno);
 		this.puntos = 0;	// cada trexs eliminado te da 2 puntos
 		this.trexsEliminados = 0;
 		this.trexsEnPantalla =0;
@@ -238,12 +239,16 @@ public class Juego extends InterfaceJuego {
 			// Actualizar posición y estado de la princesa
 			princesa.mover(pisos); // Colisionar con todos los pisos
 
+			
+			
+			
 			// Dibujar y mover balas si están activas
 			if ((entorno.sePresiono(entorno.TECLA_ESPACIO) || entorno.sePresiono('c')) && this.balas == null) {
 				this.balas = princesa.disparar();
 				inmunidad=false;//princesa pierde la inmunidad al daño
 			}
 
+			
 			// dibuja las balas
 			if (this.balas != null) {
 				this.balas.dibujar(entorno);
@@ -268,7 +273,18 @@ public class Juego extends InterfaceJuego {
 				}
 			}
 		}
-
+		
+		//subir la lava
+		if(this.princesa != null && !inmunidad) {
+			lava.subirLava();
+			lava.dibujar(entorno);
+		}
+		
+		if (this.princesa != null && !inmunidad && (lava.colisionConPrincesa(princesa)) ) {
+			this.vidas=0;
+		}
+		
+		
 		if (this.princesa == null) {
 			// Marcar que perdiste el juego
 			this.imag = Herramientas.cargarImagen("styles/fondonegro.png");
